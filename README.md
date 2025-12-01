@@ -1,2 +1,2 @@
 # Bloc2ProgrammationOrienteeObjet
-Groups Antonin Louis Adam
+Group Antonin Louis Adam
