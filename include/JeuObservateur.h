@@ -1,0 +1,6 @@
+#if !defined(DEF_JEU_OBSERVATEUR)
+#define DEF_JEU_OBSERVATEUR
+
+
+
+#endif // DEF_JEU_OBSERVATEUR
