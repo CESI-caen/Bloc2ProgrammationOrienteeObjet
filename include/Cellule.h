@@ -2,7 +2,8 @@
 class Cellule
 {
 private:
-    bool etat;
+    bool etat; // Mort = 0 | Vivant = 1
+    bool immune; // Oui = 1 | Non = 0
     std::vector<std::vector<int>> pos;
 
 public:
@@ -11,15 +12,6 @@ public:
     bool getEtat();
     void inverseEtat();
     std::vector<std::vector<int>> getPosition();
-    void setPosition();
+    void setPosition(); // Pas sur de ce setter
 };
-/*
-CPP
-Cellule::Cellule(bool etat, std::vector<std::vector<int>>& position)
-{
-}
 
-Cellule::~Cellule()
-{
-}
-*/
