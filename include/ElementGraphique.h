@@ -1,0 +1,6 @@
+#if !defined(DEF_ELEMENT_GRAPHIQUE)
+#define DEF_ELEMENT_GRAPHIQUE
+
+
+
+#endif // DEF_ELEMENT_GRAPHIQUE

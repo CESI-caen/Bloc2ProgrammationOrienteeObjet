@@ -1,0 +1,6 @@
+#if !defined(DEF_ETAT_OBSTACLE_MORT)
+#define DEF_ETAT_OBSTACLE_MORT
+
+
+
+#endif // DEF_ETAT_OBSTACLE_MORT

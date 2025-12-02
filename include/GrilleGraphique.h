@@ -1,0 +1,6 @@
+#if !defined(DEF_GRILLE_GRAPHIQUE)
+#define DEF_GRILLE_GRAPHIQUE
+
+
+
+#endif // DEF_GRILLE_GRAPHIQUE

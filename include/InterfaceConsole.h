@@ -1,0 +1,6 @@
+#if !defined(DEF_INTERFACE_CONSOLE)
+#define DEF_INTERFACE_CONSOLE
+
+
+
+#endif // DEF_INTERFACE_CONSOLE

@@ -1,7 +1,0 @@
-#if !defined(DEF_CELLULE_OBSTACLE)
-#define DEF_CELLULE_OBSTACLE
-
-
-
-
-#endif // DEF_CELLULE_OBSTACLE
