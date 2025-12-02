@@ -11,8 +11,8 @@ private:
    GrilleGraphique grille_graphique;
 public:
     InterfaceGraphique();
-    void notifierChangementGrille(const Grille& g);
-    void notifierFinSimulation(const std::string& raison);
+    void notifierChangementGrille(const Grille& g) override;
+    void jouer();
 };
 
 

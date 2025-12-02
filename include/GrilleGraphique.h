@@ -11,7 +11,7 @@ private:
 public:
     GrilleGraphique();
     void mettreAJour(const Grille &g) override;
-    void dessiner(sf::RenderTarget & t, sf::RenderStates etats) const override;
+    void draw(sf::RenderTarget &t, sf::RenderStates etats) const override;
 };
 
 
