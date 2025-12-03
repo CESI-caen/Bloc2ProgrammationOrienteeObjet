@@ -2,6 +2,8 @@
 #include <EtatVivant.h>
 #include <EtatMort.h>
 
+#include <algorithm>
+
 
 EtatVivant::EtatVivant(){
 
@@ -10,7 +12,8 @@ bool EtatVivant::estVivante() const{
     return true;
 }
 std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes) const{
-    if (nb_voisines_vivantes == 2 || nb_voisines_vivantes == 3){ //Condition rester Vivante
+    RegleJeuVie r;
+    if (std::find(r.getNbVoisinesVivantesPourNaitre().begin(), r.getNbVoisinesVivantesPourNaitre().end(), nb_voisines_vivantes)!=r.getNbVoisinesVivantesPourNaitre().end()){ //Condition rester Vivante
         return std::make_unique<EtatVivant>();
     }else{
         return std::make_unique<EtatMort>(); 
