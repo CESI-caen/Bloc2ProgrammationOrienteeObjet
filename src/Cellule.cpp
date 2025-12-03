@@ -1,19 +1,30 @@
-#include <Cellule.h>
 #include <iostream>
 
+#include "Cellule.h"
 
-Cellule::~Cellule(){
+
+/* Constructeur Cellule.hpp
+Cellule(int x, int y, std::unique_ptr<EtatCellule> etat) : x(x), y(y), etat(std::move(etat)) {}
+*/
+
+Cellule::~Cellule() {
     std::cout << "Destructeur Cellule" << std::endl;
 }
+
 int Cellule::getX() const {
     return this->x;
 }
+
 int Cellule::getY() const {
-return this->y;
+    return this->y;
 }
-bool Cellule::estVivant() const{
+
+//delegue la responsabilité à une fille d'EtatCellule (attribut etat ici), celui retournera true ou false
+bool Cellule::estVivante() {
     return this->etat->estVivante();
 }
-void Cellule::calculerProchaineEtat(int nb_voisines_vivantes){
+
+//ne renvoie rien car modifie directement l'attribut, en changeant le unique_ptr (avec move())
+void Cellule::calculerProchaineEtat(int nb_voisines_vivantes) {
     this->etat = std::move(this->etat->prochaineEtat(nb_voisines_vivantes));
 }

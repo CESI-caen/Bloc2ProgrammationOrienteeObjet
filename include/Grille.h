@@ -39,10 +39,10 @@ public:
     std::vector<std::size_t> getTableauHash();
 
     //Liste de pointeurs vers des Cellule
-    std::vector<const Cellule *> getVoisines(const Cellule &c) const;
+    std::vector<Cellule *> voisines(const Cellule &c) const;
 
     //prendra en parametre la sorie de getVoisines()
-    int nbVoisineVivant(std::vector<const Cellule *>) const;
+    int nbVoisineVivante(std::vector<Cellule *> list) const;
 };
 
 #endif // DEF_GRILLE

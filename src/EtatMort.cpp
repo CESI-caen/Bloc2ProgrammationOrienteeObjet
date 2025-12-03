@@ -1,24 +1,25 @@
 #include <memory>
-#include <EtatMort.h>
-#include <EtatVivant.h>
 #include <algorithm>
 
+#include "EtatMort.h"
+#include "EtatVivant.h"
 
-EtatMort::EtatMort(){
 
-}
-bool EtatMort::estVivante() const{
+EtatMort::EtatMort(){}
+
+bool EtatMort::estVivante() const {
     return false;
 }
-std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes) const{
+
+std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes) const {
     RegleJeuVie r;
 
-    if (std::find(r.getNbVoisinesVivantesPourSurvivre().begin(), r.getNbVoisinesVivantesPourSurvivre().end(), nb_voisines_vivantes)!=r.getNbVoisinesVivantesPourSurvivre().end()){     //Condition rester Vivante
+    //Condition pour vivre, on recherche si le parametre de la methode appartient a l'ensemble de définition des regles (ici un vector de int)
+    if (std::find(r.getNbVoisinesVivantesPourNaitre().begin(), r.getNbVoisinesVivantesPourNaitre().end(), nb_voisines_vivantes) != r.getNbVoisinesVivantesPourNaitre().end()){
         return std::make_unique<EtatVivant>();
     }else{
         return std::make_unique<EtatMort>(); 
     }
 }
-void EtatMort::dessiner(sf::RenderWindow &fenetre, sf::Vector2f position)const{
 
-}
+void EtatMort::dessiner(sf::RenderWindow &fenetre, sf::Vector2f position) const {}

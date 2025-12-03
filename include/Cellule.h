@@ -23,7 +23,7 @@ public:
     int getX() const;
     int getY() const;
 
-    bool estVivant();
+    bool estVivante();
 
     void calculerProchaineEtat(int nb_voisines_vivantes);
 };
