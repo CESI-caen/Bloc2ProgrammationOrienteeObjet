@@ -13,7 +13,7 @@ private:
     int longueur;
     std::vector<std::vector<std::unique_ptr<Cellule>>> grille;  // Tableau 2D
     std::size_t hash;
-    static std::vector<std::size_t> tableau_hashs; // Faire methode associer!!
+    static std::vector<std::size_t> tableau_hashs;
 public:
      
 
