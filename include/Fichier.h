@@ -25,4 +25,4 @@ public:
     void Ecrire(str s); //faire en sorte d'ajouter et de pas écraser !!
 };
 
-#endif // DEF_FICHIER`
+#endif // DEF_FICHIER 
