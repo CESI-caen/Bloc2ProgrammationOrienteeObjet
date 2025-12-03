@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <Cellule.h>
+
 class Grille
 {
 private:
