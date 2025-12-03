@@ -1,8 +1,10 @@
 #if !defined(DEF_REGLE_JEU_VIE)
 #define DEF_REGLE_JEU_VIE
 
-#include <Regle.h>
 #include <vector>
+
+#include "Regle.h"
+
 
 class RegleJeuVie : public Regle
 {
@@ -25,11 +27,5 @@ public:
 
     void afficher() override; //affiche les regles mise en place
 };
-
-
-
-
-
-
 
 #endif // DEF_REGLE_JEU_VIE

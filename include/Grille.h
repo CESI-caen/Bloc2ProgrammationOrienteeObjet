@@ -4,32 +4,45 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <Cellule.h>
+
+#include "Cellule.h"
+
 
 class Grille
 {
 private:
     int largeur;
     int longueur;
-    std::vector<std::vector<std::unique_ptr<Cellule>>> grille;  // Tableau 2D
-    std::size_t hash;
-    static std::vector<std::size_t> tableau_hashs;
-public:
-     
 
+    //Tableau 2D avec comme contenue de unique_ptr de Cellule
+    std::vector<std::vector<std::unique_ptr<Cellule>>> grille;
+
+    std::size_t hash;
+
+    static std::vector<std::size_t> tableau_hashs;
+
+public:
     Grille();
     Grille(int largeur, int longueur);
     ~Grille();
+
     int getLargeur();
     int getLongueur();
-    std::vector<std::size_t> getTableauHash();
-    void modifierElementGrille(int i, int j, std::unique_ptr<Cellule>);
-    std::vector<std::vector<std::unique_ptr<Cellule>>> &getGrille();
+
     std::size_t getHash();
     void calculeHash();
-    std::vector<const Cellule *> getVoisines(const Cellule &c) const; // Liste de pointeurs vers Cellule 
-    int nbVoisineVivant(const Cellule &c) const;
-};
 
+    std::vector<std::vector<std::unique_ptr<Cellule>>> &getGrille();
+
+    void modifierElementGrille(int i, int j, std::unique_ptr<Cellule>);
+
+    std::vector<std::size_t> getTableauHash();
+
+    //Liste de pointeurs vers des Cellule
+    std::vector<const Cellule *> getVoisines(const Cellule &c) const;
+
+    //prendra en parametre la sorie de getVoisines()
+    int nbVoisineVivant(std::vector<const Cellule *>) const;
+};
 
 #endif // DEF_GRILLE

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 
+
 class Fichier 
 {
 private:

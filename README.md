@@ -70,4 +70,8 @@ L’utilisation de GIT par tous les membres du projet sera indispensable. L’é
 - `<memory>`
 - `<iostream>`
 - `<SFML/Graphics.hpp>`
+- `<fstream>`
+- `<string>`
+- `<sstream>`
+- `<algorithm>`
 - ``

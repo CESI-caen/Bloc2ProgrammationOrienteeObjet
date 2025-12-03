@@ -6,13 +6,10 @@ class Regle
 {
 public:
     ~Regle();
+    
     virtual bool respecte() =0;
-    virtual void afficher() = 0;
+
+    virtual void afficher() =0;
 };
-
-
-
-
-
 
 #endif // DEF_REGLE
