@@ -16,7 +16,7 @@ public:
     void calculerProchaineEtat(int nb_voisines_vivantes);
 };
 
-
+  
 
 
 

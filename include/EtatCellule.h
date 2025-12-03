@@ -6,9 +6,9 @@
 class EtatCellule
 {
 public:
-    virtual ~EtatCellule();
+    ~EtatCellule();
     virtual bool estVivante() const =0;
-    virtual EtatCellule *prochaineEtat(int nb_voisines_vivantes) const =0;
+    virtual std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes) const =0;
     virtual void dessiner(sf::RenderWindow &fenetre, sf::Vector2f position)const =0;
 };
 

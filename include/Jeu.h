@@ -12,7 +12,7 @@ private:
     RegleJeuVie r;
     JeuObservateur *observateur;
 public:
-    Jeu(Grille g, RegleJeuVie r);
+    Jeu(Grille grille, RegleJeuVie regle);
     ~Jeu();
     bool verifHash(Fichier f);
     void evoluer();

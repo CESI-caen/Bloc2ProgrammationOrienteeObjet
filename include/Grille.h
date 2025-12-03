@@ -17,8 +17,8 @@ public:
     ~Grille();
     std::vector<std::vector<std::unique_ptr<Cellule>>> getGrille();
     std::string getHash();
-    void calculeHash();
-    std::vector<std::unique_ptr<Cellule>> getVoisin(Cellule c); // Liste de pointeurs vers Cellule
+    void calculeHash() const;
+    std::vector<const Cellule *> getVoisin(const Cellule &c) const; // Liste de pointeurs vers Cellule 
 };
 
 
