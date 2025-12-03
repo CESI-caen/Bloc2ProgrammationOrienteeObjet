@@ -2,6 +2,7 @@
 #define DEF_ETAT_CELLULE
 
 #include <SFML/Graphics.hpp>
+#include <RegleJeuVie.h> // Pourquoi RegleJeuVie.h et pas que Regle.h ?
 
 class EtatCellule
 {

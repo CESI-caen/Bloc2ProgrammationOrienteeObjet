@@ -1,6 +1,7 @@
 #if !defined(DEF_REGLE)
 #define DEF_REGLE
 
+
 class Regle
 {
 public:

@@ -5,7 +5,13 @@
 Cellule::~Cellule(){
     std::cout << "Destructeur Cellule" << std::endl;
 }
-bool Cellule::estVivant(){
+int Cellule::getX() const {
+    return this->x;
+}
+int Cellule::getY() const {
+return this->y;
+}
+bool Cellule::estVivant() const{
     return this->etat->estVivante();
 }
 void Cellule::calculerProchaineEtat(int nb_voisines_vivantes){
