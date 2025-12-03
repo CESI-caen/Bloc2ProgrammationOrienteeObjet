@@ -2,13 +2,28 @@
 #define DEF_REGLE_JEU_VIE
 
 #include <Regle.h>
+#include <vector>
 
-class RegleJeuVie :public Regle
+class RegleJeuVie : public Regle
 {
+private:
+    //idées ajout d'antonin
+    std::vector<int> nb_voisines_vivantes_pour_naitre;
+    std::vector<int> nb_voisines_vivantes_pour_survivre;
+
 public:
     RegleJeuVie();
     ~RegleJeuVie();
-    bool respecte() override;
+
+    std::vector<int> getNbVoisinesVivantesPourNaitre() const;
+    void setNbVoisinesVivantesPourNaitre(int n);
+
+    std::vector<int> getNbVoisinesVivantesPourSurvivre() const;
+    void setNbVoisinesVivantesPourSurvivre(std::vector<int> list);
+
+    bool respecte() override; //ne sert pas forcément, EtatCellule calcul déjà son avenir
+
+    void afficher() override; //affiche les regles mise en place
 };
 
 

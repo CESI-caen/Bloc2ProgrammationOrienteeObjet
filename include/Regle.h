@@ -6,6 +6,7 @@ class Regle
 public:
     ~Regle();
     virtual bool respecte() =0;
+    virtual void afficher() = 0;
 };
 
 

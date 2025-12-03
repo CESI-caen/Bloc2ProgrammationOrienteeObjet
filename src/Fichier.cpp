@@ -4,25 +4,25 @@
 const bool ajouter_dans_fichier = true;
 
 Fichier::~Fichier() {
-    std::cout << "Destructeur Fichier appelé" << std::endl;
+    std::cout << "Destd::stringucteur Fichier appelé" << std::endl;
 }
 
-str Fichier::getChemin() const {
+std::string Fichier::getChemin() const {
     return chemin;
 }
 
-str Fichier::getNom() const {
+std::string Fichier::getNom() const {
     return nom;
 }
 
-str Fichier::Lire() {
-    std::ifstream reading(chemin); //création d'instance de fichier en lecture
+std::string Fichier::Lire() {
+    std::ifstd::stringeam reading(chemin); //création d'instance de fichier en lecture
 
     //possibilité :
-    //std::ostringstream output_oss;
-    //comme string mais peux utiliser <<
+    //std::ostd::stringingstd::stringeam output_oss;
+    //comme std::stringing mais peux utiliser <<
 
-    str output = "";
+    std::string output = "";
 
     if (reading.is_open()) {
         char c = reading.get(); //un seul caractère à la fois
@@ -43,8 +43,8 @@ str Fichier::Lire() {
     return output;
 }
 
-void Fichier::Ecrire(str s) {
-    std::ofstream writting;
+void Fichier::Ecrire(std::string s) {
+    std::ofstd::stringeam writting;
 
     if(ajouter_dans_fichier) {writting.open(chemin, std::ios::app);}
     else {writting.open(chemin);}

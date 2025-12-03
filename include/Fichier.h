@@ -6,24 +6,22 @@
 #include <fstream>
 #include <sstream>
 
-using str = std::string;
-
 class Fichier 
 {
 private:
-    str nom; //utile parceque on a plrs fichiers 1 en entrée, 1 en sauvegarde   
-    str chemin;
+    std::string nom; //utile parceque on a plrs fichiers 1 en entrée, 1 en sauvegarde   
+    std::string chemin;
 
 public:
-    Fichier(str nom, str chemin) : nom(nom), chemin(chemin) {}
+    Fichier(std::string nom, std::string chemin) : nom(nom), chemin(chemin) {}
     ~Fichier();
 
-    str getChemin() const;
+    std::string getChemin() const;
 
-    str getNom() const;
+    std::string getNom() const;
 
-    str Lire(); //n'affiche pas directement dans la console mais return le contenue
-    void Ecrire(str s); //faire en sorte d'ajouter et de pas écraser !!
+    std::string Lire(); //n'affiche pas directement dans la console mais return le contenue
+    void Ecrire(std::string s); //faire en sorte d'ajouter et de pas écraser !!
 };
 
 #endif // DEF_FICHIER 
