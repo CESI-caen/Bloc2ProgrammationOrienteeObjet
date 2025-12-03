@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 using str = std::string;
 
@@ -17,11 +18,11 @@ public:
     Fichier(str nom, str chemin) : nom(nom), chemin(chemin) {}
     ~Fichier();
 
-    str getChemin(void) const;
+    str getChemin() const;
 
     str getNom() const;
 
-    str Lire(); //affiche directement dans la console mais return aussi le contenue
+    str Lire(); //n'affiche pas directement dans la console mais return le contenue
     void Ecrire(str s); //faire en sorte d'ajouter et de pas écraser !!
 };
 
