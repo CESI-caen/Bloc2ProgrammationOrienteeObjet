@@ -6,7 +6,6 @@
 
 
 RegleJeuVie::~RegleJeuVie() {
-    std::cout << "Destructeur RegleJeuVie" << std::endl;
 }
 
 RegleJeuVie::RegleJeuVie(std::vector<int> nb_voisines_vivantes_pour_naitre, std::vector<int> nb_voisines_vivantes_pour_survivre) {

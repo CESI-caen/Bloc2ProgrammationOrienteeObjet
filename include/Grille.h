@@ -22,11 +22,11 @@ private:
     static std::vector<std::size_t> tableau_hashs;
 
 public:
-    Grille();
+    Grille(int largeur = 5, int longueur = 5);
     ~Grille();
 
-    int getLargeur();
-    int getLongueur();
+    int getLargeur() const;
+    int getLongueur() const;
 
     std::size_t getHash();
     void calculeHash();

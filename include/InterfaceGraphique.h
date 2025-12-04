@@ -11,7 +11,7 @@ private:
    GrilleGraphique grille_graphique;
 public:
     InterfaceGraphique();
-    void notifierChangementGrille(const Grille& g) override;
+    void notifierChangementGrille(Grille& g) override;
     void jouer();
 };
 

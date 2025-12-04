@@ -1,1 +1,19 @@
 #include <InterfaceConsole.h>
+#include <iostream>
+
+void InterfaceConsole::notifierChangementGrille(Grille& g) {
+    int largeur = g.getLargeur();
+    int longueur = g.getLongueur();
+
+    for (int i = 0; i < largeur; ++i) {
+        for (int j = 0; j < longueur; ++j) {
+            std::cout << (g.getGrille()[i][j]->estVivante() ? "1" : "0");
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+void InterfaceConsole::notifierFinSimulation(std::string& raison) {
+    std::cout << "Simulation terminée : " << raison << std::endl;
+}

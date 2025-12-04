@@ -1,16 +1,20 @@
 #include <memory>
 #include <iostream>
+#include <algorithm>
 
 #include "EtatCellule.h"
 #include "EtatMort.h"
+#include "EtatVivant.h"
 #include "Grille.h"
 #include "Fichier.h"
     
 std::vector<std::size_t> Grille::tableau_hashs;
 
-Grille::Grille() {
+Grille::Grille(int largeur, int longueur) {
+    /*
     Fichier f("fichier1", "../grille_debut.txt");
     std::string s = f.Lire();
+    */
     this->largeur = largeur;
     this->longueur =longueur;
 
@@ -30,11 +34,11 @@ Grille::~Grille() {
     std::cout << "Destructeur Grille" <<std::endl;
 }
 
-int Grille::getLargeur() {
+int Grille::getLargeur() const{
     return this->largeur;
 }
 
-int Grille::getLongueur() {
+int Grille::getLongueur() const{
     return this-> longueur;
 }
 
@@ -42,7 +46,11 @@ std::vector<std::size_t>  Grille::getTableauHash() {
     return this->tableau_hashs;
 }
 
-void Grille::modifierElementGrille(int i, int j, std::unique_ptr<Cellule>) {}
+void Grille::modifierElementGrille(int i, int j, std::unique_ptr<Cellule> cellule) {
+    if (i >= 0 && i < largeur && j >= 0 && j < longueur) {
+        grille[i][j] = std::move(cellule);
+    }
+}
 
 std::vector<std::vector<std::unique_ptr<Cellule>>> &Grille::getGrille() {
     return this->grille;
@@ -57,7 +65,7 @@ void Grille::calculeHash() {
 
     for (int i = 0; i < this->largeur; i++) {
         for (int j = 0; j < this->longueur; j++) {
-            temp_string += (this->grille[i][j] ? "1" : "0");
+            temp_string += (this->grille[i][j]->estVivante() ? "1" : "0");
         }
         temp_string += ";"; 
     }
@@ -116,12 +124,29 @@ void Grille::evoluer() {
 
     for (int i = 0; i < largeur; i++) {
         for (int j = 0; j < longueur; j++) {
-
+            // On récupère la cellule actuelle
             Cellule& c = *grille[i][j];
+            
+            // On récupère ses voisines
             auto v = voisines(c);
             int nb = nbVoisineVivante(v);
 
-            g_temp.grille[i][j]->calculerProchaineEtat(nb);
+            // On calcule le prochain état basé sur l'état ACTUEL de la cellule
+            // et non sur l'état de g_temp qui contient que des cellules mortes
+            std::unique_ptr<EtatCellule> nouvelEtat;
+            
+            if (c.estVivante()) {
+                // Si la cellule est vivante, on utilise la logique d'EtatVivant
+                EtatVivant etatVivantTemp;
+                nouvelEtat = etatVivantTemp.prochaineEtat(nb);
+            } else {
+                // Si la cellule est morte, on utilise la logique d'EtatMort
+                EtatMort etatMortTemp;
+                nouvelEtat = etatMortTemp.prochaineEtat(nb);
+            }
+            
+            // On crée une nouvelle cellule avec le nouvel état
+            g_temp.grille[i][j] = std::make_unique<Cellule>(i, j, std::move(nouvelEtat));
         }
     }
 

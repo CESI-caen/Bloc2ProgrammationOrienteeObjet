@@ -8,7 +8,6 @@ Cellule(int x, int y, std::unique_ptr<EtatCellule> etat) : x(x), y(y), etat(std:
 */
 
 Cellule::~Cellule() {
-    std::cout << "Destructeur Cellule" << std::endl;
 }
 
 int Cellule::getX() const {

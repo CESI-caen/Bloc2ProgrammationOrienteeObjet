@@ -5,8 +5,8 @@
 class InterfaceConsole :public JeuObservateur
 {
 public:
-    void notifierChangementGrille(const Grille& g) override;
-    void notifierFinSimulation(const std::string& raison) override;
+    void notifierChangementGrille(Grille& g) override;
+    void notifierFinSimulation(std::string& raison) override;
 };
 
 

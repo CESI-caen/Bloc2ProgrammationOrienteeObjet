@@ -7,9 +7,9 @@
 class JeuObservateur
 {
 public:
-    ~JeuObservateur();
-    virtual void notifierChangementGrille(const Grille& g) =0;
-    virtual void notifierFinSimulation(const std::string& raison) =0;
+    virtual ~JeuObservateur() = default;
+    virtual void notifierChangementGrille(Grille& g) =0;
+    virtual void notifierFinSimulation(std::string& raison) =0;
 };
 
 
