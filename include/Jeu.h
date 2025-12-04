@@ -13,18 +13,18 @@
 class Jeu
 {
 private:
-    Grille grille;
-    RegleJeuVie regle;
+    Grille *grille;
+    Regle *regle;
 
     std::weak_ptr<JeuObservateur> observateur;
     //piste d'amélioration : std::vector<std::weak_ptr<JeuObservateur>>
     //pour avoir plusieurs observateurs
 
 public:
-    Jeu(Grille grille, RegleJeuVie regle) : grille(grille), regle(regle) {}
+    Jeu(Grille *grille, Regle *regle) : grille(grille), regle(regle) {}
     ~Jeu();
 
-    void setObservateur(JeuObservateur *observateur);
+    void setObservateur(std::weak_ptr<JeuObservateur> observateur); 
 };
 
 #endif // DEF_JEU

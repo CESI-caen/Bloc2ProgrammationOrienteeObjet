@@ -1,11 +1,12 @@
-#include <Jeu.h>
+#include "Jeu.h"
+
 
 Jeu::~Jeu() {
-    std::cout << "Destructeur Jeu appelé" << std::endl;
+    std::cout << "Destructeur Jeu" << std::endl;
 }
 
-void setObservateur(JeuObservateur *observateur){
-    
+void Jeu::setObservateur(std::weak_ptr<JeuObservateur> observateur){
+    this->observateur = observateur;
 }
 
 

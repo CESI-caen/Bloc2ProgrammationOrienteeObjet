@@ -1,4 +1,4 @@
-#include <Fichier.h>
+#include "Fichier.h"
 
 //variable pour savoir si on veut ajouter ou écraser les données dans le fichier
 const bool ajouter_dans_fichier = true;
@@ -16,7 +16,7 @@ std::string Fichier::getNom() const {
 }
 
 std::string Fichier::Lire() {
-    std::ifstd::stringeam reading(chemin); //création d'instance de fichier en lecture
+    std::ifstream reading(chemin); //création d'instance de fichier en lecture
 
     //possibilité :
     //std::ostd::stringingstd::stringeam output_oss;
@@ -44,7 +44,7 @@ std::string Fichier::Lire() {
 }
 
 void Fichier::Ecrire(std::string s) {
-    std::ofstd::stringeam writting;
+    std::ofstream writting;
 
     if(ajouter_dans_fichier) {writting.open(chemin, std::ios::app);}
     else {writting.open(chemin);}
