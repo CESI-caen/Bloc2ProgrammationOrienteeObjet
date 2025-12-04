@@ -93,15 +93,19 @@ void Grille::calculeHash() {
 std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     std::vector<Cellule *> voisins;
 
-    const int dx[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-    const int dy[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    // Déplacements pour les 8 voisins : [dLigne, dColonne]
+    const int dx[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
+    const int dy[8]   = {-1,  0,  1, -1, 1, -1, 0, 1};
 
-    int x = c.getX();
-    int y = c.getY();
+    // ATTENTION: dans Cellule, x stocke la ligne et y stocke la colonne
+    // (c'est contre-intuitif mais c'est comme ça que le code est fait)
+    int ligne = c.getX();    // x stocke la ligne (i)
+    int colonne = c.getY();  // y stocke la colonne (j)
 
     for (int i = 0; i < 8; i++) {
-        int nx = (x + dx[i] + this->longueur) % this->longueur;
-        int ny = (y + dy[i] + this->largeur) % this->largeur;
+        // Calcul avec modulo pour grille torique
+        int nx = (ligne + dx[i] + this->longueur) % this->longueur;
+        int ny = (colonne + dy[i] + this->largeur) % this->largeur;
         voisins.push_back(grille[nx][ny].get());
     }
     return voisins; 
