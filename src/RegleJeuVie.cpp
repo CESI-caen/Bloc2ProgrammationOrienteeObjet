@@ -36,19 +36,17 @@ void RegleJeuVie::afficherRegle() {
     oss << " ---------------------------- Regle du Jeu de la vie ---------------------------- \n"
     
         << "Nombre de cellules vivantes voisines nécessaires pour qu'une cellule morte vive : [";
-    for (int i=0; i<(sizeof this->nb_voisines_vivantes_pour_naitre)-1; i++) {
+    for (int i=0; i<(this->nb_voisines_vivantes_pour_naitre).size(); i++) {
         oss << nb_voisines_vivantes_pour_naitre[i]
             << ", ";}
-    oss << nb_voisines_vivantes_pour_naitre[sizeof this->nb_voisines_vivantes_pour_naitre]
-        << "]\n"
+        oss << "]\n"
 
     
         << "Nombre de cellules vivantes voisines nécessaires pour qu'une cellule reste en vie : [";
-    for (int i=0; i<(sizeof this->nb_voisines_vivantes_pour_survivre)-1; i++) {
+    for (int i=0; i<(this->nb_voisines_vivantes_pour_survivre).size(); i++) {
         oss << nb_voisines_vivantes_pour_survivre[i]
             << ", ";}
-    oss << nb_voisines_vivantes_pour_survivre[sizeof this->nb_voisines_vivantes_pour_survivre]
-        << "]\n";
+        oss << "]\n";
 
     std::cout << oss.str() << std::endl;
 }
