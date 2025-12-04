@@ -4,10 +4,13 @@
 #include "EtatCellule.h"
 #include "EtatMort.h"
 #include "Grille.h"
-
+#include "Fichier.h"
+    
 std::vector<std::size_t> Grille::tableau_hashs;
 
-Grille::Grille(int largeur, int longueur) {
+Grille::Grille() {
+    Fichier f("fichier1", "../grille_debut.txt");
+    std::string s = f.Lire();
     this->largeur = largeur;
     this->longueur =longueur;
 

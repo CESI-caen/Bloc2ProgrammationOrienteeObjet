@@ -22,7 +22,7 @@ private:
     static std::vector<std::size_t> tableau_hashs;
 
 public:
-    Grille(int largeur = 5, int longueur = 5);
+    Grille();
     ~Grille();
 
     int getLargeur();
