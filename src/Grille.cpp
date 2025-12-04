@@ -5,6 +5,8 @@
 #include "EtatMort.h"
 #include "Grille.h"
 
+std::vector<std::size_t> Grille::tableau_hashs;
+
 Grille::Grille(int largeur, int longueur) {
     this->largeur = largeur;
     this->longueur =longueur;
