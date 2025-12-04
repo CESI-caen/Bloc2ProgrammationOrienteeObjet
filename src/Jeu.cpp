@@ -1,8 +1,15 @@
 #include "Jeu.h"
 #include <sstream>
 #include <iostream>
-Regle* Jeu::regle = new RegleJeuVie();
-Jeu::Jeu() {}
+
+Regle* Jeu::regle = nullptr;
+
+Jeu::Jeu(Regle* r) {
+    if (r != nullptr) {
+        regle = r;
+    }
+    // Ne pas créer de RegleJeuVie par défaut
+}
 
 Jeu::~Jeu() {
     std::cout << "Destructeur Jeu" << std::endl;
@@ -12,7 +19,7 @@ void Jeu::setObservateur(std::weak_ptr<JeuObservateur> observateur){
     this->observateur = observateur;
 }
 
-Regle *Jeu::getRegle(){ 
+Regle* Jeu::getRegle() { 
     return regle; 
 }
 

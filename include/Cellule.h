@@ -25,7 +25,7 @@ public:
 
     bool estVivante();
 
-    void calculerProchaineEtat(int nb_voisines_vivantes);
+    void calculerProchaineEtat(int nb_voisines_vivantes, const Regle& regle);
 };
 
 #endif // DEF_CELLULE

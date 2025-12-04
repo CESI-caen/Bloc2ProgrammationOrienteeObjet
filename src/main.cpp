@@ -14,10 +14,10 @@ int main(){
     // Création de la règle du jeu de la vie
     RegleJeuVie regle;
     // Création du jeu avec la grille et la règle
-    Jeu jeu;
+    Jeu jeu(&regle);
     std::string contenu = f.Lire();
-    // Création d'une grille de 10x10
-    Grille grille(jeu.analyserStringFichier(contenu));
+    // Création d'une grille avec les données du fichier ET la règle
+    Grille grille(jeu.analyserStringFichier(contenu), &regle);
 
     // Création d'un observateur console
     auto observateurConsole = std::make_shared<InterfaceConsole>();

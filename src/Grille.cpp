@@ -14,7 +14,7 @@
 
 std::vector<std::size_t> Grille::tableau_hashs;
 
-Grille::Grille(DonneesFichierDebut donnees) {
+Grille::Grille(DonneesFichierDebut donnees, Regle* regle) : regle(regle) {
     this->largeur = donnees.largeur;   // largeur = colonnes (X)
     this->longueur = donnees.longueur; // longueur = lignes (Y)
 
@@ -147,22 +147,27 @@ void Grille::evoluer() {
             // On récupère ses voisines
             auto v = voisines(c);
             int nb = nbVoisineVivante(v);
-
-            // On calcule le prochain état basé sur l'état ACTUEL de la cellule
-            // et non sur l'état de g_temp qui contient que des cellules mortes
+            
+            // Calculer le prochain état avec la règle
             std::unique_ptr<EtatCellule> nouvelEtat;
             
-            if (c.estVivante()) {
-                // Si la cellule est vivante, on utilise la logique d'EtatVivant
-                EtatVivant etatVivantTemp;
-                nouvelEtat = etatVivantTemp.prochaineEtat(nb);
-            } else {
-                // Si la cellule est morte, on utilise la logique d'EtatMort
-                EtatMort etatMortTemp;
-                nouvelEtat = etatMortTemp.prochaineEtat(nb);
+            // Calculer le prochain état
+            // Utiliser la règle de la grille, ou créer une règle par défaut
+            const Regle* regleAUtiliser = regle;
+            RegleJeuVie regleDefaut;
+            if (regleAUtiliser == nullptr) {
+                regleAUtiliser = &regleDefaut;
             }
             
-            // On crée une nouvelle cellule avec le nouvel état
+            if (c.estVivante()) {
+                EtatVivant etatVivantTemp;
+                nouvelEtat = etatVivantTemp.prochaineEtat(nb, *regleAUtiliser);
+            } else {
+                EtatMort etatMortTemp;
+                nouvelEtat = etatMortTemp.prochaineEtat(nb, *regleAUtiliser);
+            }
+            
+            // Créer une nouvelle cellule avec le nouvel état
             g_temp[i][j] = std::make_unique<Cellule>(i, j, std::move(nouvelEtat));
         }
     }

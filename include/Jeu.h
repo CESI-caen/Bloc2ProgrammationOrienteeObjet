@@ -13,20 +13,20 @@
 class Jeu
 {
 private:
-    Grille *grille;
-    static Regle *regle;
+    std::unique_ptr<Grille> grille;
+    static Regle* regle;
 
     std::weak_ptr<JeuObservateur> observateur;
     //piste d'amélioration : std::vector<std::weak_ptr<JeuObservateur>>
     //pour avoir plusieurs observateurs
 
 public:
-    Jeu();
+    Jeu(Regle* r = nullptr);
     ~Jeu();
 
     void setObservateur(std::weak_ptr<JeuObservateur> observateur);
 
-    static Regle *getRegle();
+    static Regle* getRegle();
 
     DonneesFichierDebut analyserStringFichier(const std::string& s);
     

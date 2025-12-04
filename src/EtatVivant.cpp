@@ -10,8 +10,8 @@ bool EtatVivant::estVivante() const {
     return true;
 }
 
-std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes) const {
-    const RegleJeuVie r;
+std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {
+    const RegleJeuVie& r = dynamic_cast<const RegleJeuVie&>(regle);
     const auto& nbPourSurvivre = r.getNbVoisinesVivantesPourSurvivre(); // référence constante
 
     if (std::find(nbPourSurvivre.begin(), nbPourSurvivre.end(), nb_voisines_vivantes) != nbPourSurvivre.end()) {

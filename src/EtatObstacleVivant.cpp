@@ -10,7 +10,7 @@ bool EtatObstacleVivant::estVivante() const{
 }
 
 //retourne toujours le meme état : vivant
-std::unique_ptr<EtatCellule> EtatObstacleVivant::prochaineEtat(int nb_voisines_vivantes) const {
+std::unique_ptr<EtatCellule> EtatObstacleVivant::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {
     return std::make_unique<EtatObstacleVivant>();
 }
 

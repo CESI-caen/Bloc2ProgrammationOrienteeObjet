@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Cellule.h"
+#include "Regle.h"
 
 
 struct DonneesFichierDebut {
@@ -26,9 +27,11 @@ private:
     std::size_t hash;
 
     static std::vector<std::size_t> tableau_hashs;
+    
+    Regle* regle; // Règle du jeu à appliquer
 
 public:
-    Grille(DonneesFichierDebut donnees);
+    Grille(DonneesFichierDebut donnees, Regle* regle = nullptr);
     ~Grille();
 
     int getLargeur() const;

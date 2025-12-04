@@ -5,7 +5,7 @@
 #include "Regle.h"
 #include "RegleJeuVie.h" 
 
-
+class Regle;
 class EtatCellule
 {
 public:
@@ -14,7 +14,7 @@ public:
     virtual bool estVivante() const =0;
 
     //retourne un unique_ptr d'un EtatCellule qui est celui de la prochaine ittération de la simulation
-    virtual std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes) const =0;
+    virtual std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const =0;
 
     virtual void dessiner(sf::RenderWindow &fenetre, sf::Vector2f position ) const =0;
 };

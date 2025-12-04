@@ -13,7 +13,7 @@ public:
 
     bool estVivante() const override;
 
-    std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes) const override;
+    std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const override;
 
     void dessiner(sf::RenderWindow &fenetre, sf::Vector2f position) const override;
 };
