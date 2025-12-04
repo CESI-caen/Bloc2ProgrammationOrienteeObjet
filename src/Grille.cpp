@@ -99,3 +99,21 @@ int Grille::nbVoisineVivante(std::vector<Cellule *> list) const {
     }
     return compteur;
 }
+
+bool Grille::verifHash() const {
+    if (std::find(this->tableau_hashs.begin(), this->tableau_hashs.end(), this->hash) != this->tableau_hashs.end()) {return true;}
+    else {return false;}
+}
+
+void Grille::evoluer() {
+    /*
+    1. parcourir la grille existance
+    2. calculer le nouvelle etat de chaque cellule
+    3. enregistrer ce nouvelle etat dans une nouvelle grille
+    4. move la nouvelle grille dans l'attribut grille
+    */
+    // this->largeur;
+    // this->longueur;
+
+   
+}

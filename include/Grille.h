@@ -43,6 +43,10 @@ public:
 
     //prendra en parametre la sorie de getVoisines()
     int nbVoisineVivante(std::vector<Cellule *> list) const;
+
+    //utilise l'attribut static tableau_hashs de Grille
+    bool verifHash() const; 
+    void evoluer();
 };
 
 #endif // DEF_GRILLE

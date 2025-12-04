@@ -24,11 +24,6 @@ public:
     Jeu(Grille grille, RegleJeuVie regle) : grille(grille), regle(regle) {}
     ~Jeu();
 
-    //Logiquement devrait être une méthode de Grille
-    bool verifHash() const; //utilise l'attribut static tableau_hashs de Grille
-
-    void evoluer();
-
     void setObservateur(JeuObservateur *observateur);
 };
 
