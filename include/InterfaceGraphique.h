@@ -4,6 +4,9 @@
 #include <JeuObservateur.h>
 #include <SFML/Graphics.hpp>
 #include <GrilleGraphique.h>
+#include <memory>
+
+class InterfaceConsole; // Forward declaration
 class InterfaceGraphique :public JeuObservateur
 {
 private:
@@ -11,8 +14,10 @@ private:
    GrilleGraphique grille_graphique;
 public:
     InterfaceGraphique();
+    void notifierFinSimulation(std::string& raison) override;
     void notifierChangementGrille(Grille& g) override;
-    void jouer();
+    void jouer(Grille& grille, std::shared_ptr<InterfaceConsole> observateurConsole);
+    void fermer();
 };
 
 

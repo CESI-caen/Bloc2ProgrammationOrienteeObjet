@@ -41,6 +41,7 @@ public:
     void calculeHash();
 
     std::vector<std::vector<std::unique_ptr<Cellule>>> &getGrille();
+    const std::vector<std::vector<std::unique_ptr<Cellule>>> &getGrille() const;
 
     void modifierElementGrille(int i, int j, std::unique_ptr<Cellule>);
 

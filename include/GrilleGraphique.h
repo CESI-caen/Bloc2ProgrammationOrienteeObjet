@@ -7,7 +7,10 @@
 class GrilleGraphique :public ElementGraphique
 {
 private:
-    std::vector<sf::RectangleShape> cellules_visuelles;
+    std::vector<std::vector<sf::RectangleShape>> cellules_visuelles;
+    float tailleCellule;
+    sf::Color couleurVivante;
+    sf::Color couleurMorte;
 public:
     GrilleGraphique();
     void mettreAJour(const Grille &g) override;

@@ -30,8 +30,6 @@ public:
 
     DonneesFichierDebut analyserStringFichier(const std::string& s);
     
-    //A enlever plus tard, juste pour debug
-    void afficherDonneesFichier(const DonneesFichierDebut& donnees) const;
 };
 
 #endif // DEF_JEU

@@ -1,7 +1,8 @@
 #include <memory>
-
+#include <iostream>
 #include "EtatVivant.h"
 #include "EtatMort.h"
+#include <algorithm> // Ajout de l'include pour std::find
 
 
 EtatVivant::EtatVivant() {}
@@ -13,7 +14,6 @@ bool EtatVivant::estVivante() const {
 std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {
     const RegleJeuVie& r = dynamic_cast<const RegleJeuVie&>(regle);
     const auto& nbPourSurvivre = r.getNbVoisinesVivantesPourSurvivre(); // référence constante
-
     if (std::find(nbPourSurvivre.begin(), nbPourSurvivre.end(), nb_voisines_vivantes) != nbPourSurvivre.end()) {
         return std::make_unique<EtatVivant>();
     } else {

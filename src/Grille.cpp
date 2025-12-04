@@ -66,6 +66,10 @@ std::vector<std::vector<std::unique_ptr<Cellule>>> &Grille::getGrille() {
     return this->grille;
 }
 
+const std::vector<std::vector<std::unique_ptr<Cellule>>> &Grille::getGrille() const {
+    return this->grille;
+}
+
 std::size_t Grille::getHash() {
     return this->hash;
 }
@@ -81,8 +85,6 @@ void Grille::calculeHash() {
         temp_string += ";"; 
     }
 
-    std::cout << "String représentant la grille : " << temp_string << std::endl;
-
     std::size_t H = std::hash<std::string>{}(temp_string);
     std::cout << "Hash = " << H << std::endl;
 
@@ -95,7 +97,7 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
 
     // Déplacements pour les 8 voisins : [dLigne, dColonne]
     const int dx[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
-    const int dy[8]   = {-1,  0,  1, -1, 1, -1, 0, 1};
+    const int dy[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
 
     // ATTENTION: dans Cellule, x stocke la ligne et y stocke la colonne
     // (c'est contre-intuitif mais c'est comme ça que le code est fait)
@@ -123,46 +125,53 @@ int Grille::nbVoisineVivante(std::vector<Cellule *> list) const {
 }
 
 bool Grille::verifHash() const {
-    if (std::find(this->tableau_hashs.begin(), this->tableau_hashs.end(), this->hash) != this->tableau_hashs.end()) {return true;}
-    else {return false;}
+    // Vérifie si le hash actuel existe déjà dans l'historique (excluant la dernière entrée qui est le hash actuel)
+    // Si on a au moins 2 hashs et que le hash actuel apparaît avant la dernière position
+    if (tableau_hashs.size() < 2) {
+        return false; // Pas assez d'historique pour détecter une boucle
+    }
+    
+    // Chercher le hash actuel dans l'historique (sauf la dernière position)
+    for (size_t i = 0; i < tableau_hashs.size() - 1; i++) {
+        if (tableau_hashs[i] == this->hash) {
+            return true; // Configuration déjà vue
+        }
+    }
+    return false;
 }
 
 void Grille::evoluer() {
     /*
-    1. parcourir la grille existance
-    2. calculer le nouvelle etat de chaque cellule
-    3. enregistrer ce nouvelle etat dans une nouvelle grille (de type Grille ?) (une copie de celle de base par exemple (pour garder les dimensions))
-    4. move la nouvelle grille dans l'attribut grille
+    1. Parcourir la grille existante
+    2. Calculer le nouvel état de chaque cellule
+    3. Enregistrer ce nouvel état dans une nouvelle grille temporaire
+    4. Remplacer l'ancienne grille par la nouvelle
     */
 
-    // grille[ligne][colonne] = grille[y][x]
+    // Créer une grille temporaire
     std::vector<std::vector<std::unique_ptr<Cellule>>> g_temp;
     g_temp.resize(longueur);
     for (int i = 0; i < longueur; i++) {
         g_temp[i].resize(largeur);
     }
 
-    // i = ligne (Y), j = colonne (X)
+    // Boucle sur chaque cellule
     for (int i = 0; i < longueur; i++) {
         for (int j = 0; j < largeur; j++) {
-            // On récupère la cellule actuelle
             Cellule& c = *grille[i][j];
-            
-            // On récupère ses voisines
-            auto v = voisines(c);
-            int nb = nbVoisineVivante(v);
-            
-            // Calculer le prochain état avec la règle
-            std::unique_ptr<EtatCellule> nouvelEtat;
-            
-            // Calculer le prochain état
-            // Utiliser la règle de la grille, ou créer une règle par défaut
+
+            // CORRECTION: Utiliser la fonction voisines() pour une gestion cohérente de la grille torique
+            std::vector<Cellule*> vois = voisines(c);
+
+            // Compter le nombre de voisines vivantes
+            int nb = nbVoisineVivante(vois);
+
+            // --- Calculer le prochain état ---
             const Regle* regleAUtiliser = regle;
             RegleJeuVie regleDefaut;
-            if (regleAUtiliser == nullptr) {
-                regleAUtiliser = &regleDefaut;
-            }
-            
+            if (regleAUtiliser == nullptr) regleAUtiliser = &regleDefaut;
+
+            std::unique_ptr<EtatCellule> nouvelEtat;
             if (c.estVivante()) {
                 EtatVivant etatVivantTemp;
                 nouvelEtat = etatVivantTemp.prochaineEtat(nb, *regleAUtiliser);
@@ -170,12 +179,14 @@ void Grille::evoluer() {
                 EtatMort etatMortTemp;
                 nouvelEtat = etatMortTemp.prochaineEtat(nb, *regleAUtiliser);
             }
-            
+
             // Créer une nouvelle cellule avec le nouvel état
             g_temp[i][j] = std::make_unique<Cellule>(i, j, std::move(nouvelEtat));
         }
     }
 
-    // on remplace l’ancienne grille par la nouvelle
+    // Remplacer l'ancienne grille par la nouvelle
     grille = std::move(g_temp);
 }
+
+

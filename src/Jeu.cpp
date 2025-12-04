@@ -44,7 +44,6 @@ DonneesFichierDebut Jeu::analyserStringFichier(const std::string& s) {
     for (int i = 0; i < donnees.longueur; i++) {
         donnees.grille_debut[i].resize(donnees.largeur);
     }
-    afficherDonneesFichier(donnees); // Debug: afficher les dimensions lues
 
     // Parcourir les lignes restantes pour remplir la grille
     // i = ligne (Y), j = colonne (X)
@@ -64,34 +63,3 @@ DonneesFichierDebut Jeu::analyserStringFichier(const std::string& s) {
     return donnees;
 }
 
-//A enlever plus tard, juste pour debug
-void Jeu::afficherDonneesFichier(const DonneesFichierDebut& donnees) const {
-    std::cout << "=== Affichage DonneesFichierDebut ===" << std::endl;
-    std::cout << "Largeur (colonnes): " << donnees.largeur << std::endl;
-    std::cout << "Longueur (lignes): " << donnees.longueur << std::endl;
-    std::cout << "\nGrille:" << std::endl;
-    
-    // i = ligne (Y), j = colonne (X)
-    for (int i = 0; i < donnees.longueur; i++) {
-        for (int j = 0; j < donnees.largeur; j++) {
-            int valeur = donnees.grille_debut[i][j];
-            
-            // Affichage avec symboles pour meilleure lisibilité
-            if (valeur == 0) {
-                std::cout << ".";
-            } else if (valeur == 1) {
-                std::cout << "X";
-            } else if (valeur == 8) {
-                std::cout << "#";
-            } else if (valeur == 9) {
-                std::cout << "@";
-            } else {
-                std::cout << valeur; // Afficher la valeur si inconnue
-            }
-            std::cout << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "\nLégende: . = mort(0), X = vivant(1), # = obstacle mort(8), @ = obstacle vivant(9)" << std::endl;
-    std::cout << "==================================" << std::endl;
-}
