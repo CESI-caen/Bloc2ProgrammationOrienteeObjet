@@ -15,16 +15,18 @@
 std::vector<std::size_t> Grille::tableau_hashs;
 
 Grille::Grille(DonneesFichierDebut donnees) {
-    this->largeur = donnees.largeur;
-    this->longueur = donnees.longueur;
+    this->largeur = donnees.largeur;   // largeur = colonnes (X)
+    this->longueur = donnees.longueur; // longueur = lignes (Y)
 
-    grille.resize(largeur);
-    for (int i = 0; i < largeur; i++) {
-        grille[i].resize(longueur);
+    // grille[ligne][colonne] = grille[y][x]
+    grille.resize(longueur);
+    for (int i = 0; i < longueur; i++) {
+        grille[i].resize(largeur);
     }
 
-    for(int i = 0 ; i < largeur ;i++ ){
-        for(int j = 0 ; j < longueur ; j++){
+    // i = ligne (Y), j = colonne (X)
+    for(int i = 0 ; i < longueur ;i++ ){
+        for(int j = 0 ; j < largeur ; j++){
             if (donnees.grille_debut[i][j] == 0) {
                 this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatMort>());
             } else if (donnees.grille_debut[i][j] == 1) {
@@ -71,8 +73,9 @@ std::size_t Grille::getHash() {
 void Grille::calculeHash() {
     std::string temp_string;
 
-    for (int i = 0; i < this->largeur; i++) {
-        for (int j = 0; j < this->longueur; j++) {
+    // i = ligne (Y), j = colonne (X)
+    for (int i = 0; i < this->longueur; i++) {
+        for (int j = 0; j < this->largeur; j++) {
             temp_string += (this->grille[i][j]->estVivante() ? "1" : "0");
         }
         temp_string += ";"; 
@@ -97,8 +100,8 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     int y = c.getY();
 
     for (int i = 0; i < 8; i++) {
-        int nx = (x + dx[i] + this->largeur) % this->largeur;
-        int ny = (y + dy[i] + this->longueur) % this->longueur;
+        int nx = (x + dx[i] + this->longueur) % this->longueur;
+        int ny = (y + dy[i] + this->largeur) % this->largeur;
         voisins.push_back(grille[nx][ny].get());
     }
     return voisins; 
@@ -128,10 +131,16 @@ void Grille::evoluer() {
     4. move la nouvelle grille dans l'attribut grille
     */
 
-    std::vector<std::vector<std::unique_ptr<Cellule>>> g_temp = grille; 
+    // grille[ligne][colonne] = grille[y][x]
+    std::vector<std::vector<std::unique_ptr<Cellule>>> g_temp;
+    g_temp.resize(longueur);
+    for (int i = 0; i < longueur; i++) {
+        g_temp[i].resize(largeur);
+    }
 
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < longueur; j++) {
+    // i = ligne (Y), j = colonne (X)
+    for (int i = 0; i < longueur; i++) {
+        for (int j = 0; j < largeur; j++) {
             // On récupère la cellule actuelle
             Cellule& c = *grille[i][j];
             

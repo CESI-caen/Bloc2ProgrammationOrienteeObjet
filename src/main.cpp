@@ -10,35 +10,21 @@
 #include <memory>
 
 int main(){
+    Fichier f("fichier1", "../grille_debut.txt");
+    // Création de la règle du jeu de la vie
+    RegleJeuVie regle;
+    // Création du jeu avec la grille et la règle
+    Jeu jeu;
+    std::string contenu = f.Lire();
     // Création d'une grille de 10x10
-    Grille grille(10, 10);
-
-    // Initialisation de quelques cellules vivantes dans la grille
-    // On crée un motif simple (par exemple, un "blinker" ou quelques cellules aléatoires)
-    
-    // Cellule vivante en position (2, 3)
-    grille.modifierElementGrille(2, 3, std::make_unique<Cellule>(2, 3, std::make_unique<EtatVivant>()));
-    
-    // Cellule vivante en position (3, 3)
-    grille.modifierElementGrille(3, 4, std::make_unique<Cellule>(3, 4, std::make_unique<EtatVivant>()));
-    
-    // Cellule vivante en position (4, 3)
-    grille.modifierElementGrille(4, 4, std::make_unique<Cellule>(4, 4, std::make_unique<EtatVivant>()));
-    
-    // Cellule morte en position (5, 5)
-    grille.modifierElementGrille(4, 3, std::make_unique<Cellule>(4, 3, std::make_unique<EtatVivant>()));
-
-    // Cellule morte en position (5, 5)
-    grille.modifierElementGrille(4, 2, std::make_unique<Cellule>(4, 2, std::make_unique<EtatVivant>()));
+    Grille grille(jeu.analyserStringFichier(contenu));
 
     // Création d'un observateur console
     auto observateurConsole = std::make_shared<InterfaceConsole>();
 
-    // Création de la règle du jeu de la vie
-    RegleJeuVie regle;
+    
 
-    // Création du jeu avec la grille et la règle
-    Jeu jeu(&grille, &regle);
+    
 
     // Attachement de l'observateur au jeu
     jeu.setObservateur(observateurConsole);
@@ -52,7 +38,7 @@ int main(){
     // Simulation de quelques itérations
     std::cout << "\nÉvolution de la grille..." << std::endl;
     
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 3; i++) {
         std::cout << "\n--- Itération " << (i + 1) << " ---" << std::endl;
         grille.evoluer();
         observateurConsole->notifierChangementGrille(grille);

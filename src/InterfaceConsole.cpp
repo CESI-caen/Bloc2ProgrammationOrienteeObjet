@@ -2,11 +2,12 @@
 #include <iostream>
 
 void InterfaceConsole::notifierChangementGrille(Grille& g) {
-    int largeur = g.getLargeur();
-    int longueur = g.getLongueur();
+    int largeur = g.getLargeur();   // colonnes (X)
+    int longueur = g.getLongueur(); // lignes (Y)
 
-    for (int i = 0; i < largeur; ++i) {
-        for (int j = 0; j < longueur; ++j) {
+    // i = ligne (Y), j = colonne (X)
+    for (int i = 0; i < longueur; ++i) {
+        for (int j = 0; j < largeur; ++j) {
             std::cout << (g.getGrille()[i][j]->estVivante() ? "1" : "0");
         }
         std::cout << std::endl;

@@ -3,6 +3,7 @@
 
 #include "EtatMort.h"
 #include "EtatVivant.h"
+#include "Jeu.h"
 
 
 EtatMort::EtatMort(){}
@@ -12,8 +13,12 @@ bool EtatMort::estVivante() const {
 }
 
 std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes) const {
-    const RegleJeuVie r;
-    const auto& nbPourNaitre = r.getNbVoisinesVivantesPourNaitre(); // référence constante pour éviter la copie
+
+    Regle* b = new RegleJeuVie();
+    RegleJeuVie* r = dynamic_cast<RegleJeuVie*>(b);
+
+
+    const auto& nbPourNaitre = r->getNbVoisinesVivantesPourNaitre(); // référence constante pour éviter la copie
 
     if (std::find(nbPourNaitre.begin(), nbPourNaitre.end(), nb_voisines_vivantes) != nbPourNaitre.end()) {
         return std::make_unique<EtatVivant>();
