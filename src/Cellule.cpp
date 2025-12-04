@@ -19,7 +19,7 @@ int Cellule::getY() const {
 }
 
 //delegue la responsabilité à une fille d'EtatCellule (attribut etat ici), celui retournera true ou false
-bool Cellule::estVivante() {
+bool Cellule::estVivante() const{
     return this->etat->estVivante();
 }
 

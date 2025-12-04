@@ -96,8 +96,10 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     std::vector<Cellule *> voisins;
 
     // Déplacements pour les 8 voisins : [dLigne, dColonne]
-    const int dx[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
-    const int dy[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
+    // dLigne : décalage en ligne (haut/bas)
+    // dColonne : décalage en colonne (gauche/droite)
+    const int dLigne[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
+    const int dColonne[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
 
     // ATTENTION: dans Cellule, x stocke la ligne et y stocke la colonne
     // (c'est contre-intuitif mais c'est comme ça que le code est fait)
@@ -106,9 +108,9 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
 
     for (int i = 0; i < 8; i++) {
         // Calcul avec modulo pour grille torique
-        int nx = (ligne + dx[i] + this->longueur) % this->longueur;
-        int ny = (colonne + dy[i] + this->largeur) % this->largeur;
-        voisins.push_back(grille[nx][ny].get());
+        int nouvelleLigne = (ligne + dLigne[i] + this->longueur) % this->longueur;
+        int nouvelleColonne = (colonne + dColonne[i] + this->largeur) % this->largeur;
+        voisins.push_back(grille[nouvelleLigne][nouvelleColonne].get());
     }
     return voisins; 
 }
