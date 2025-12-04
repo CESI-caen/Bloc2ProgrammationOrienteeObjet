@@ -9,23 +9,20 @@
 class RegleJeuVie : public Regle
 {
 private:
-    //idées ajout d'antonin
     std::vector<int> nb_voisines_vivantes_pour_naitre;
     std::vector<int> nb_voisines_vivantes_pour_survivre;
 
 public:
-    RegleJeuVie();
+    RegleJeuVie(std::vector<int> nb_voisines_vivantes_pour_naitre = {3}, std::vector<int> nb_voisines_vivantes_pour_survivre = {2, 3});
     ~RegleJeuVie();
 
     std::vector<int> getNbVoisinesVivantesPourNaitre() const;
-    void setNbVoisinesVivantesPourNaitre(int n);
+    void setNbVoisinesVivantesPourNaitre(std::vector<int> list = {3});
 
     std::vector<int> getNbVoisinesVivantesPourSurvivre() const;
-    void setNbVoisinesVivantesPourSurvivre(std::vector<int> list);
+    void setNbVoisinesVivantesPourSurvivre(std::vector<int> list = {2, 3});
 
-    bool respecte() override; //ne sert pas forcément, EtatCellule calcul déjà son avenir
-
-    void afficher() override; //affiche les regles mise en place
+    void afficherRegle() override; //affiche les regles mise en place
 };
 
 #endif // DEF_REGLE_JEU_VIE
