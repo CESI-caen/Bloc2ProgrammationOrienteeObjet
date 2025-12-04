@@ -52,7 +52,7 @@ int main(){
     // Simulation de quelques itérations
     std::cout << "\nÉvolution de la grille..." << std::endl;
     
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 100; i++) {
         std::cout << "\n--- Itération " << (i + 1) << " ---" << std::endl;
         grille.evoluer();
         observateurConsole->notifierChangementGrille(grille);

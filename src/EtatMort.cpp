@@ -12,18 +12,15 @@ bool EtatMort::estVivante() const {
 }
 
 std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes) const {
+    const RegleJeuVie r;
+    const auto& nbPourNaitre = r.getNbVoisinesVivantesPourNaitre(); // référence constante pour éviter la copie
 
-    /*
-    Regle* r =new RegleJeuVie();
-    RegleJeuVie* d = dynamic_cast<RegleJeuVie*>(r);
-    */
-   
-    RegleJeuVie r;
-    if (std::find(r.getNbVoisinesVivantesPourNaitre().begin(), r.getNbVoisinesVivantesPourNaitre().end(), nb_voisines_vivantes) != r.getNbVoisinesVivantesPourNaitre().end()) {
+    if (std::find(nbPourNaitre.begin(), nbPourNaitre.end(), nb_voisines_vivantes) != nbPourNaitre.end()) {
         return std::make_unique<EtatVivant>();
     } else {
-        return std::make_unique<EtatMort>(); 
+        return std::make_unique<EtatMort>();
     }
 }
+
 
 void EtatMort::dessiner(sf::RenderWindow &fenetre, sf::Vector2f position) const {}
