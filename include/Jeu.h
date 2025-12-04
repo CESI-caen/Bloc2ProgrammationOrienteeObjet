@@ -24,7 +24,9 @@ public:
     Jeu(Grille *grille, Regle *regle) : grille(grille), regle(regle) {}
     ~Jeu();
 
-    void setObservateur(std::weak_ptr<JeuObservateur> observateur); 
+    void setObservateur(std::weak_ptr<JeuObservateur> observateur);
+
+    DonneesFichierDebut analyserStringFichier(const std::string& s);
 };
 
 #endif // DEF_JEU

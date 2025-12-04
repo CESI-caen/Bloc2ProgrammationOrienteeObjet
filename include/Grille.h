@@ -8,6 +8,12 @@
 #include "Cellule.h"
 
 
+struct DonneesFichierDebut {
+    int largeur;
+    int longueur;
+    std::vector<std::vector<int>> grille_debut; //int plus facile ici, seront lu pour devenir des unique_ptr<Cellule> dans Grille::evoluer()
+};
+
 class Grille
 {
 private:
@@ -22,7 +28,7 @@ private:
     static std::vector<std::size_t> tableau_hashs;
 
 public:
-    Grille(int largeur = 5, int longueur = 5);
+    Grille(DonneesFichierDebut donnees);
     ~Grille();
 
     int getLargeur() const;
@@ -44,7 +50,8 @@ public:
     int nbVoisineVivante(std::vector<Cellule *> list) const;
 
     //utilise l'attribut static tableau_hashs de Grille
-    bool verifHash() const; 
+    bool verifHash() const;
+    
     void evoluer();
 };
 

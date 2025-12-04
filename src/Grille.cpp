@@ -1,22 +1,22 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 #include "EtatCellule.h"
 #include "EtatMort.h"
 #include "EtatVivant.h"
+#include "EtatObstacleMort.h"
+#include "EtatObstacleVivant.h"
 #include "Grille.h"
 #include "Fichier.h"
-    
+
+
 std::vector<std::size_t> Grille::tableau_hashs;
 
-Grille::Grille(int largeur, int longueur) {
-    /*
-    Fichier f("fichier1", "../grille_debut.txt");
-    std::string s = f.Lire();
-    */
-    this->largeur = largeur;
-    this->longueur =longueur;
+Grille::Grille(DonneesFichierDebut donnees) {
+    this->largeur = donnees.largeur;
+    this->longueur = donnees.longueur;
 
     grille.resize(largeur);
     for (int i = 0; i < largeur; i++) {
@@ -25,7 +25,15 @@ Grille::Grille(int largeur, int longueur) {
 
     for(int i = 0 ; i < largeur ;i++ ){
         for(int j = 0 ; j < longueur ; j++){
-            this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatMort>());
+            if (donnees.grille_debut[i][j] == 0) {
+                this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatMort>());
+            } else if (donnees.grille_debut[i][j] == 1) {
+                this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatVivant>());
+            } else if (donnees.grille_debut[i][j] == 8) {
+                this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatObstacleMort>());
+            } else if (donnees.grille_debut[i][j] == 9) {
+                this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatObstacleVivant>());
+            }
         }
     }
 }
@@ -116,11 +124,11 @@ void Grille::evoluer() {
     /*
     1. parcourir la grille existance
     2. calculer le nouvelle etat de chaque cellule
-    3. enregistrer ce nouvelle etat dans une nouvelle grille
+    3. enregistrer ce nouvelle etat dans une nouvelle grille (de type Grille ?) (une copie de celle de base par exemple (pour garder les dimensions))
     4. move la nouvelle grille dans l'attribut grille
     */
 
-    Grille g_temp(this->largeur, this->longueur);
+    std::vector<std::vector<std::unique_ptr<Cellule>>> g_temp = grille; 
 
     for (int i = 0; i < largeur; i++) {
         for (int j = 0; j < longueur; j++) {
@@ -146,10 +154,10 @@ void Grille::evoluer() {
             }
             
             // On crée une nouvelle cellule avec le nouvel état
-            g_temp.grille[i][j] = std::make_unique<Cellule>(i, j, std::move(nouvelEtat));
+            g_temp[i][j] = std::make_unique<Cellule>(i, j, std::move(nouvelEtat));
         }
     }
 
     // on remplace l’ancienne grille par la nouvelle
-    grille = std::move(g_temp.grille);
+    grille = std::move(g_temp);
 }
