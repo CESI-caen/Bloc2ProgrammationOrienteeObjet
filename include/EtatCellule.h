@@ -2,14 +2,14 @@
 #define DEF_ETAT_CELLULE
 
 #include <SFML/Graphics.hpp>
-#include "Regle.h" // use dynamic_cast
-#include "RegleJeuVie.h" //ce serait mieux de pouvoir généralisé avec "Regle.h"
+#include "Regle.h"
+#include "RegleJeuVie.h" 
 
 
 class EtatCellule
 {
 public:
-    ~EtatCellule();
+    virtual ~EtatCellule() = default;
 
     virtual bool estVivante() const =0;
 

@@ -2,27 +2,21 @@
 #include <iostream>
 
 #include "EtatCellule.h"
+#include "EtatMort.h"
 #include "Grille.h"
-
-
-Grille::Grille() {
-    int largeur = 2 ;
-    int longueur = 5 ;
-
-    for(int i = 0 ; i < largeur ;i++ ){
-        for(int j = 0 ; j < longueur ; j++){
-            this->grille[i][j] = std::make_unique<Cellule>(i, j ,std::unique_ptr<EtatCellule>());
-        }
-    } 
-}
 
 Grille::Grille(int largeur, int longueur) {
     this->largeur = largeur;
     this->longueur =longueur;
 
+    grille.resize(largeur);
+    for (int i = 0; i < largeur; i++) {
+        grille[i].resize(longueur);
+    }
+
     for(int i = 0 ; i < largeur ;i++ ){
         for(int j = 0 ; j < longueur ; j++){
-            this->grille[i][j] = std::make_unique<Cellule>(i, j ,std::unique_ptr<EtatCellule>());
+            this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatMort>());
         }
     }
 }
@@ -43,7 +37,7 @@ std::vector<std::size_t>  Grille::getTableauHash() {
     return this->tableau_hashs;
 }
 
-void modifierElementGrille(int i, int j, std::unique_ptr<Cellule>) {}
+void Grille::modifierElementGrille(int i, int j, std::unique_ptr<Cellule>) {}
 
 std::vector<std::vector<std::unique_ptr<Cellule>>> &Grille::getGrille() {
     return this->grille;
@@ -84,7 +78,7 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     for (int i = 0; i < 8; i++) {
         int nx = (x + dx[i] + this->largeur) % this->largeur;
         int ny = (y + dy[i] + this->longueur) % this->longueur;
-        voisins.push_back(grille[ny][nx].get());
+        voisins.push_back(grille[nx][ny].get());
     }
     return voisins; 
 }
@@ -92,7 +86,7 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
 int Grille::nbVoisineVivante(std::vector<Cellule *> list) const {
     int compteur = 0;
 
-    for (int i=0; i<sizeof list; i++) {
+    for (std::size_t i = 0; i < list.size(); i++) {
         if (list[i]->estVivante()) {
             compteur ++;
         }
@@ -112,8 +106,20 @@ void Grille::evoluer() {
     3. enregistrer ce nouvelle etat dans une nouvelle grille
     4. move la nouvelle grille dans l'attribut grille
     */
-    // this->largeur;
-    // this->longueur;
 
-   
+    Grille g_temp(this->largeur, this->longueur);
+
+    for (int i = 0; i < largeur; i++) {
+        for (int j = 0; j < longueur; j++) {
+
+            Cellule& c = *grille[i][j];
+            auto v = voisines(c);
+            int nb = nbVoisineVivante(v);
+
+            g_temp.grille[i][j]->calculerProchaineEtat(nb);
+        }
+    }
+
+    // on remplace l’ancienne grille par la nouvelle
+    grille = std::move(g_temp.grille);
 }

@@ -11,10 +11,11 @@ bool EtatVivant::estVivante() const {
 }
 
 std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes) const {
-    RegleJeuVie r;
+    Regle* r =new RegleJeuVie();
+    RegleJeuVie* d = dynamic_cast<RegleJeuVie*>(r);
 
     //Condition pour rester Vivante
-    if (std::find(r.getNbVoisinesVivantesPourSurvivre().begin(), r.getNbVoisinesVivantesPourSurvivre().end(), nb_voisines_vivantes) != r.getNbVoisinesVivantesPourSurvivre().end()){
+    if (std::find(d->getNbVoisinesVivantesPourSurvivre().begin(), d->getNbVoisinesVivantesPourSurvivre().end(), nb_voisines_vivantes) != d->getNbVoisinesVivantesPourSurvivre().end()){
         return std::make_unique<EtatVivant>();
     }else{
         return std::make_unique<EtatMort>(); 
