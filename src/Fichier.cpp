@@ -25,10 +25,10 @@ std::string Fichier::Lire() {
     std::string output = "";
 
     if (reading.is_open()) {
-        char c = reading.get(); //un seul caractère à la fois
+        char c; 
 
         while (reading.good()) {
-            c = reading.get();
+            c = reading.get(); //un seul caractère à la fois
             output += c;
         }
         reading.close();
