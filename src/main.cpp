@@ -1,10 +1,11 @@
-#include "Regle.h"
-#include "RegleJeuVie.h"
+#include "Fichier.h"
+
 
 int main(){
-    Regle *r = new RegleJeuVie;
+    Fichier f("fichier1", "../grille_debut.txt");
 
-    r->afficherRegle();
+    std::string s = f.Lire();
+    std::cout << s;
 
     return 0;
 }

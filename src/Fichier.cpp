@@ -3,8 +3,12 @@
 //variable pour savoir si on veut ajouter ou écraser les données dans le fichier
 const bool ajouter_dans_fichier = true;
 
+/*Constructeur
+Fichier(std::string nom, std::string chemin) : nom(nom), chemin(chemin) {}
+*/
+
 Fichier::~Fichier() {
-    std::cout << "Destd::stringucteur Fichier appelé" << std::endl;
+    std::cout << "Destructeur Fichier" << std::endl;
 }
 
 std::string Fichier::getChemin() const {
@@ -18,16 +22,13 @@ std::string Fichier::getNom() const {
 std::string Fichier::Lire() {
     std::ifstream reading(chemin); //création d'instance de fichier en lecture
 
-    //possibilité :
-    //std::ostd::stringingstd::stringeam output_oss;
-    //comme std::stringing mais peux utiliser <<
-
     std::string output = "";
 
     if (reading.is_open()) {
-        char c;
+        char c = reading.get(); //un seul caractère à la fois
 
-        while (reading.get()) {
+        while (reading.good()) {
+            c = reading.get();
             output += c;
         }
         reading.close();
