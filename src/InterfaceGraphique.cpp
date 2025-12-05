@@ -34,7 +34,8 @@ void InterfaceGraphique::notifierChangementGrille(Grille& g) {
 void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole> observateurConsole) {
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    sf::Time TimePerFrame = sf::seconds(0.5f); // 500ms entre chaque itération
+    float time = 0.5f; // Temps en secondes entre chaque itération
+    sf::Time TimePerFrame = sf::seconds(time); // 500ms entre chaque itération
 
     int iteration = 0;
     bool simulationActive = false; //
@@ -51,6 +52,16 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                     clock.restart(); // Réinitialiser le timer
                     timeSinceLastUpdate = sf::Time::Zero;
                     simulationActive = !simulationActive;
+                }
+            }
+            if (event.type == sf::Event::KeyPressed){
+                if (event.key.code == sf::Keyboard::Up){
+                    time = time / 2.0f;
+                    TimePerFrame = sf::seconds(time);
+                }
+                if (event.key.code == sf::Keyboard::Down){
+                    time = time * 2.0f;
+                    TimePerFrame = sf::seconds(time);
                 }
             }
 
@@ -81,6 +92,24 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                         }
                     }
                 }
+            
+            if (event.type == sf::Event::KeyPressed){
+                if (event.key.code == sf::Keyboard::Right){
+                    for (int i = 0; i < 1; i++) {
+                        grille.evoluer();
+                        grille.calculeHash();
+                    }
+                    // Mise à jour des observateurs après 10 évolutions
+                    observateurConsole->notifierChangementGrille(grille);
+                    grille_graphique.mettreAJour(grille);
+                    // Vérification de stabilité (via le hash)
+                     if (grille.verifHash()) {
+                        std::string raison = "La grille est devenue stable (même configuration déjà vue)";
+                        observateurConsole->notifierFinSimulation(raison);
+                        simulationActive = false;
+                    }
+                }
+            }
 
         }
 
