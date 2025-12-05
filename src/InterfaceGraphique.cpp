@@ -1,15 +1,17 @@
-#include <InterfaceGraphique.h>
 #include <iostream>
 #include <SFML/System/Clock.hpp>
 #include <chrono>
 #include <thread>
+#include <memory>
+
 #include "Grille.h"
 #include "InterfaceConsole.h"
 #include "EtatVivant.h"
 #include "EtatMort.h"
 #include "EtatObstacleMort.h"
 #include "EtatObstacleVivant.h"
-#include <memory>
+#include "InterfaceGraphique.h"
+
 class GrilleGraphique;
 
 InterfaceGraphique::InterfaceGraphique(int l, int lg) {
@@ -35,7 +37,7 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
     float time = 0.5f; // Temps en secondes entre chaque itération
-    sf::Time TimePerFrame = sf::seconds(time); // 500ms entre chaque itération
+    sf::Time TimePerFrame = sf::seconds(time); 
 
     int iteration = 0;
     bool simulationActive = false; //
@@ -47,6 +49,7 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                 fenetre.close();
                 simulationActive = false;
             }
+            // Mettre en pause la simulation avec la barre espace
             if (event.type == sf::Event::KeyPressed){
                 if (event.key.code == sf::Keyboard::Space){
                     clock.restart(); // Réinitialiser le timer
@@ -54,6 +57,7 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                     simulationActive = !simulationActive;
                 }
             }
+            // Ajuster la vitesse avec les flèches haut et bas
             if (event.type == sf::Event::KeyPressed){
                 if (event.key.code == sf::Keyboard::Up){
                     time = time / 2.0f;

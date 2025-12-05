@@ -1,7 +1,7 @@
 #if !defined(DEF_INTERFACE_CONSOLE)
 #define DEF_INTERFACE_CONSOLE
 
-#include <JeuObservateur.h>
+#include "JeuObservateur.h"
 class InterfaceConsole :public JeuObservateur
 {
 public:

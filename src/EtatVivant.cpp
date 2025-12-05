@@ -1,9 +1,9 @@
 #include <memory>
 #include <iostream>
+#include <algorithm> 
+
 #include "EtatVivant.h"
 #include "EtatMort.h"
-#include <algorithm> // Ajout de l'include pour std::find
-
 
 EtatVivant::EtatVivant() {}
 
@@ -23,6 +23,3 @@ std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes,
         return std::make_unique<EtatMort>();
     }
 }
-
-
-void EtatVivant::dessiner(sf::RenderWindow &fenetre, sf::Vector2f position) const {}

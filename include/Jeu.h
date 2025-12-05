@@ -15,10 +15,8 @@ class Jeu
 private:
     std::unique_ptr<Grille> grille;
     static Regle* regle;
-
+    
     std::weak_ptr<JeuObservateur> observateur;
-    //piste d'amélioration : std::vector<std::weak_ptr<JeuObservateur>>
-    //pour avoir plusieurs observateurs
 
 public:
     Jeu(Regle* r = nullptr);

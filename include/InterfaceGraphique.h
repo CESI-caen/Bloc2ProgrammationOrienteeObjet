@@ -1,12 +1,15 @@
 #if !defined(DEF_INTERFACE_GRAPHIQUE)
 #define DEF_INTERFACE_GRAPHIQUE
 
-#include <JeuObservateur.h>
-#include <SFML/Graphics.hpp>
-#include <GrilleGraphique.h>
 #include <memory>
+#include <SFML/Graphics.hpp>
 
-class InterfaceConsole; // Forward declaration
+#include "JeuObservateur.h"
+#include "GrilleGraphique.h"
+
+
+class InterfaceConsole;
+
 class InterfaceGraphique :public JeuObservateur
 {
 private:

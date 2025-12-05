@@ -22,7 +22,8 @@ public:
     std::vector<int> getNbVoisinesVivantesPourSurvivre() const;
     void setNbVoisinesVivantesPourSurvivre(std::vector<int> list = {2, 3});
 
-    void afficherRegle() override; //affiche les regles mise en place
+    //affiche les regles mise en place
+    void afficherRegle() override; 
 };
 
 #endif // DEF_REGLE_JEU_VIE

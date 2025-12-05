@@ -1,5 +1,5 @@
-#include <InterfaceConsole.h>
 #include <iostream>
+#include "InterfaceConsole.h"
 
 void InterfaceConsole::notifierChangementGrille(Grille& g) {
     int largeur = g.getLargeur();   // colonnes (X)

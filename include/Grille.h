@@ -12,7 +12,8 @@
 struct DonneesFichierDebut {
     int largeur;
     int longueur;
-    std::vector<std::vector<int>> grille_debut; //int plus facile ici, seront lu pour devenir des unique_ptr<Cellule> dans Grille::evoluer()
+    //int plus facile ici, seront lu pour devenir des unique_ptr<Cellule> dans Grille::evoluer()
+    std::vector<std::vector<int>> grille_debut; 
 };
 
 class Grille

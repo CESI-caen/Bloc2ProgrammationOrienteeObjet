@@ -119,7 +119,6 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     const int dy[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
 
     // ATTENTION: dans Cellule, x stocke la ligne et y stocke la colonne
-    // (c'est contre-intuitif mais c'est comme ça que le code est fait)
     int ligne = c.getX();    // x stocke la ligne (i)
     int colonne = c.getY();  // y stocke la colonne (j)
 
@@ -147,7 +146,7 @@ bool Grille::verifHash() const {
     // Vérifie si le hash actuel existe déjà dans l'historique (excluant la dernière entrée qui est le hash actuel)
     // Si on a au moins 2 hashs et que le hash actuel apparaît avant la dernière position
     if (tableau_hashs.size() < 2) {
-        return false; // Pas assez d'historique pour détecter une boucle
+        return false; // Pas assez de hashs pour détecter une boucle
     }
     
     // Chercher le hash actuel dans l'historique (sauf la dernière position)

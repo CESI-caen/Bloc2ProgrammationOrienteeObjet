@@ -74,4 +74,8 @@ L’utilisation de GIT par tous les membres du projet sera indispensable. L’é
 - `<string>`
 - `<sstream>`
 - `<algorithm>`
+- `<thread>`
+- `<chrono>`
+- `<SFML/System/Clock.hpp> `
+- `<gtest/gtest.h>`
 - ``

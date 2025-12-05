@@ -1,6 +1,6 @@
-#include "Jeu.h"
 #include <sstream>
 #include <iostream>
+#include "Jeu.h"
 
 Regle* Jeu::regle = nullptr;
 

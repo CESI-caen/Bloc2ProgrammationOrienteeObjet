@@ -1,7 +1,7 @@
 #if !defined(DEF_GRILLE_GRAPHIQUE)
 #define DEF_GRILLE_GRAPHIQUE
 
-#include <ElementGraphique.h>
+#include "ElementGraphique.h"
 #include <vector>
 
 class GrilleGraphique :public ElementGraphique

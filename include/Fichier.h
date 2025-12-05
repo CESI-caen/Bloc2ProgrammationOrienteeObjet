@@ -10,7 +10,8 @@
 class Fichier 
 {
 private:
-    std::string nom; //utile parceque on a plrs fichiers 1 en entrée, 1 en sauvegarde   
+        //utile parce qu'on a plusieurs fichiers 1 en entrée, 1 en sauvegarde   
+    std::string nom; 
     std::string chemin;
 
 public:

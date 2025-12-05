@@ -6,7 +6,6 @@ class Regle
 {
 public:
     virtual ~Regle() =default;
-    
     virtual void afficherRegle() =0;
 };
 

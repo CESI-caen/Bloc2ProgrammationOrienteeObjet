@@ -1,8 +1,9 @@
 #if !defined(DEF_JEU_OBSERVATEUR)
 #define DEF_JEU_OBSERVATEUR
 
-#include <Grille.h>
+
 #include <string>
+#include "Grille.h"
 
 class JeuObservateur
 {

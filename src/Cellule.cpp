@@ -4,7 +4,9 @@
 
 
 /* Constructeur Cellule.hpp
+
 Cellule(int x, int y, std::unique_ptr<EtatCellule> etat) : x(x), y(y), etat(std::move(etat)) {}
+
 */
 
 Cellule::~Cellule() {

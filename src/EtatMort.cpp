@@ -26,6 +26,3 @@ std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes, c
     }
 }
 
-
-
-void EtatMort::dessiner(sf::RenderWindow &fenetre, sf::Vector2f position) const {}
