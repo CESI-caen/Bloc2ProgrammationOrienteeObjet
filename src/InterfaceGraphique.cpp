@@ -68,21 +68,31 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
             if(event.type == sf::Event::MouseButtonPressed ) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(fenetre);
+                    
                     int x = mousePos.x / grille_graphique.getTailleCellule();
                     int y = mousePos.y / grille_graphique.getTailleCellule();
+                    
                     if (x >= 0 && x < grille.getLargeur() && y >= 0 && y < grille.getLongueur()) {
-                        Cellule& cellule = *grille.getGrille()[y][x];
 
-                        if (!cellule.estVivante() && !cellule.estObstacle()) {
+                        
+                        Cellule& cellule = *grille.getGrille()[y][x];
+                        bool estVivante = cellule.estVivante();
+                        bool estObstacle = cellule.estObstacle();
+
+                        if (!estVivante && !estObstacle) {
+                            // Morte → Vivante
                             grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatVivant>()));
                         }
-                        else if(cellule.estVivante() && !cellule.estObstacle()){
+                        else if(estVivante && !estObstacle){
+                            // Vivante → Obstacle Vivant
                             grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatObstacleVivant>()));
                         } 
-                        else if (cellule.estVivante() && cellule.estObstacle()){
+                        else if (estVivante && estObstacle){
+                            // Obstacle Vivant → Obstacle Mort
                             grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatObstacleMort>()));
                         } 
-                        else if (!cellule.estVivante() && cellule.estObstacle()){
+                        else if (!estVivante && estObstacle){
+                            // Obstacle Mort → Morte
                             grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatMort>()));
                         }
 

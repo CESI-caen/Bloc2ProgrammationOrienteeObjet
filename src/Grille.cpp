@@ -74,7 +74,7 @@ std::vector<std::size_t>  Grille::getTableauHash() {
 }
 
 void Grille::modifierElementGrille(int i, int j, std::unique_ptr<Cellule> cellule) {
-    if (i >= 0 && i < largeur && j >= 0 && j < longueur) {
+    if (i >= 0 && i < longueur && j >= 0 && j < largeur) {
         grille[i][j] = std::move(cellule);
     }
 }
