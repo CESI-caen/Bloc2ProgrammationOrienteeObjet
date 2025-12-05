@@ -12,11 +12,12 @@
 #include <thread>
 #include <chrono>
 #include <SFML/System/Clock.hpp> // Ajout pour la gestion du temps dans la boucle principale
+
 int main(){
     // CORRECTION: Pour le mode graphique, on va gérer l'évolution dans la boucle principale
     // de l'interface graphique pour éviter les problèmes de concurrence.
     // Pour le mode console, il faudrait une logique différente, mais ici on se concentre sur le mode graphique.
-    Fichier f("fichier1", "../grille_debut.txt");
+    Fichier f("Glidder", "../grille_debut.txt");
     // Création de la règle du jeu de la vie
     RegleJeuVie regle;
     // Création du jeu avec la grille et la règle
