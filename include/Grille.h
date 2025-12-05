@@ -31,6 +31,7 @@ private:
     Regle* regle; // Règle du jeu à appliquer
 
 public:
+    Grille(std::string largeur, std::string longueur, Regle* regle = nullptr);
     Grille(DonneesFichierDebut donnees, Regle* regle = nullptr);
     ~Grille();
 

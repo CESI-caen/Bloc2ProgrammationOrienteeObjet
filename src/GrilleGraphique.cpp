@@ -4,6 +4,12 @@ GrilleGraphique::GrilleGraphique() {
     tailleCellule = 20;
     couleurVivante = sf::Color::White;
     couleurMorte = sf::Color::Black;
+    couleurObstacleMorte = sf::Color::Red;
+    couleurObstacleVivante = sf::Color::Green;
+}
+
+float GrilleGraphique::getTailleCellule() const {
+    return this->tailleCellule;
 }
 
 void GrilleGraphique::mettreAJour(const Grille &g) {
@@ -11,22 +17,37 @@ void GrilleGraphique::mettreAJour(const Grille &g) {
     int longueur = g.getLongueur();
     
     cellules_visuelles.clear();
-    // CORRECTION: grille[longueur][largeur]
+    // grille[longueur][largeur]
     cellules_visuelles.resize(longueur);
     for (int i = 0; i < longueur; i++) {
         cellules_visuelles[i].resize(largeur);
     }
 
-    // CORRECTION: i = ligne (longueur), j = colonne (largeur)
+    // i = ligne (longueur), j = colonne (largeur)
     for (int i = 0; i < longueur; i++) {
         for (int j = 0; j < largeur; j++) {
             sf::RectangleShape rect(sf::Vector2f(tailleCellule, tailleCellule));
-            // CORRECTION: Inversion des coordonnées pour l'affichage (j=colonne, i=ligne)
+            //Inversion des coordonnées pour l'affichage (j=colonne, i=ligne)
             rect.setPosition(j * tailleCellule, i * tailleCellule);
-            // CORRECTION: Accès à la grille (i=ligne, j=colonne)
-            rect.setFillColor(g.getGrille()[i][j]->estVivante() ? couleurVivante : couleurMorte);
+            //Accès à la grille (i=ligne, j=colonne)
+
+            if (g.getGrille()[i][j]->estVivante()) {
+                // Cellule vivante
+                if (g.getGrille()[i][j]->estObstacle()) {
+                    rect.setFillColor(couleurObstacleVivante);
+                } else {
+                    rect.setFillColor(couleurVivante);
+                }
+            } else {
+                // Cellule morte
+                if (g.getGrille()[i][j]->estObstacle()) {
+                    rect.setFillColor(couleurObstacleMorte);
+                } else {
+                    rect.setFillColor(couleurMorte);
+                }
+            }
             
-            // Ajouter une bordure fine grise pour séparer les cellules
+            // Ajout d'une bordure fine grise pour séparer les cellules
             rect.setOutlineThickness(1.f);
             rect.setOutlineColor(sf::Color(50, 50, 50)); // Gris foncé
             

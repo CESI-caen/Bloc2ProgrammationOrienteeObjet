@@ -5,11 +5,18 @@
 #include <thread>
 #include "Grille.h"
 #include "InterfaceConsole.h"
+#include "EtatVivant.h"
+#include "EtatMort.h"
+#include "EtatObstacleMort.h"
+#include "EtatObstacleVivant.h"
 #include <memory>
+class GrilleGraphique;
 
-
-InterfaceGraphique::InterfaceGraphique(): fenetre(sf::VideoMode(800, 600), "Jeu de la Vie") 
-{}
+InterfaceGraphique::InterfaceGraphique(int l, int lg) {
+    int largeurFenetre = l * grille_graphique.getTailleCellule();
+    int longueurFenetre = lg * grille_graphique.getTailleCellule();
+    fenetre.create(sf::VideoMode(largeurFenetre, longueurFenetre), "Jeu de la Vie");
+}
 
 void InterfaceGraphique::fermer() {
     fenetre.close();
@@ -18,14 +25,11 @@ void InterfaceGraphique::notifierFinSimulation(std::string& raison) {
     std::cout << "Fin de simulation : " << raison << std::endl;
 }
 
-
-
 void InterfaceGraphique::notifierChangementGrille(Grille& g) {
     // Transmet l'état de la grille à l'objet graphique
-    grille_graphique.mettreAJour(g);
+    this->grille_graphique.mettreAJour(g);
 }
 
-// ...existing code...
 
 void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole> observateurConsole) {
     sf::Clock clock;
@@ -33,7 +37,7 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
     sf::Time TimePerFrame = sf::seconds(0.5f); // 500ms entre chaque itération
 
     int iteration = 0;
-    bool simulationActive = true;
+    bool simulationActive = false; //
 
     while (fenetre.isOpen()) {
         sf::Event event;
@@ -42,6 +46,42 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                 fenetre.close();
                 simulationActive = false;
             }
+            if (event.type == sf::Event::KeyPressed){
+                if (event.key.code == sf::Keyboard::Space){
+                    clock.restart(); // Réinitialiser le timer
+                    timeSinceLastUpdate = sf::Time::Zero;
+                    simulationActive = !simulationActive;
+                }
+            }
+
+            if(event.type == sf::Event::MouseButtonPressed ) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(fenetre);
+                    int x = mousePos.x / grille_graphique.getTailleCellule();
+                    int y = mousePos.y / grille_graphique.getTailleCellule();
+                    if (x >= 0 && x < grille.getLargeur() && y >= 0 && y < grille.getLongueur()) {
+                        Cellule& cellule = *grille.getGrille()[y][x];
+
+                        if (!cellule.estVivante() && !cellule.estObstacle()) {
+                            grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatVivant>()));
+                        }
+                        else if(cellule.estVivante() && !cellule.estObstacle()){
+                            grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatObstacleVivant>()));
+                        } 
+                        else if (cellule.estVivante() && cellule.estObstacle()){
+                            grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatObstacleMort>()));
+                        } 
+                        else if (!cellule.estVivante() && cellule.estObstacle()){
+                            grille.modifierElementGrille(y, x, std::make_unique<Cellule>(y, x, std::make_unique<EtatMort>()));
+                        }
+
+                            // Mettre à jour les observateurs après la modification
+                            observateurConsole->notifierChangementGrille(grille);
+                            grille_graphique.mettreAJour(grille);
+                        }
+                    }
+                }
+
         }
 
         timeSinceLastUpdate += clock.restart();
@@ -66,14 +106,6 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                 std::string raison = "La grille est devenue stable (même configuration déjà vue)";
                 observateurConsole->notifierFinSimulation(raison);
                 simulationActive = false;
-                fenetre.close(); // CORRECTION: Fermer la fenêtre ici
-            }
-            
-            if (iteration >= 100) { // Limite arbitraire de 100 itérations
-                std::string raison = "Nombre maximum d'itérations atteint (100)";
-                observateurConsole->notifierFinSimulation(raison);
-                simulationActive = false;
-                fenetre.close(); // CORRECTION: Fermer la fenêtre ici
             }
 
         }

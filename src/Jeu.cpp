@@ -51,7 +51,6 @@ DonneesFichierDebut Jeu::analyserStringFichier(const std::string& s) {
         for (int j = 0; j < donnees.largeur; j++) {
             char etat_cellule;
             
-            // IMPORTANT : lire effectivement le caractère du stream
             if (!(stream >> etat_cellule)) {
                 std::cerr << "Erreur : Impossible de lire la cellule [" << i << "][" << j << "]" << std::endl;
             } else {

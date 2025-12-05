@@ -11,6 +11,9 @@ EtatMort::EtatMort(){}
 bool EtatMort::estVivante() const {
     return false;
 }
+bool EtatMort::estObstacle() const {
+    return false;
+}
 
 std::unique_ptr<EtatCellule> EtatMort::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {
 

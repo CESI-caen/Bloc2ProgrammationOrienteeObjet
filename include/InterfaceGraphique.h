@@ -13,7 +13,7 @@ private:
    sf::RenderWindow fenetre;
    GrilleGraphique grille_graphique;
 public:
-    InterfaceGraphique();
+    InterfaceGraphique(int l, int lg);
     void notifierFinSimulation(std::string& raison) override;
     void notifierChangementGrille(Grille& g) override;
     void jouer(Grille& grille, std::shared_ptr<InterfaceConsole> observateurConsole);

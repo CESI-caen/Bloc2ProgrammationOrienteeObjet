@@ -11,8 +11,11 @@ private:
     float tailleCellule;
     sf::Color couleurVivante;
     sf::Color couleurMorte;
+    sf::Color couleurObstacleMorte;
+    sf::Color couleurObstacleVivante;
 public:
     GrilleGraphique();
+    float getTailleCellule() const;
     void mettreAJour(const Grille &g) override;
     void draw(sf::RenderTarget &t, sf::RenderStates etats) const override;
 };

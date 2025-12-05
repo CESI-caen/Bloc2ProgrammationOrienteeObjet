@@ -24,6 +24,7 @@ public:
     int getY() const;
 
     bool estVivante() const;
+    bool estObstacle() const;
 
     void calculerProchaineEtat(int nb_voisines_vivantes, const Regle& regle);
 };

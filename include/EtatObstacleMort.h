@@ -12,6 +12,7 @@ public:
     EtatObstacleMort();
 
     bool estVivante() const override;
+    bool estObstacle() const override;
 
     std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const override;
 

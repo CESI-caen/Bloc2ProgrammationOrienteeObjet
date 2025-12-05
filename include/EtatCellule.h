@@ -12,6 +12,7 @@ public:
     virtual ~EtatCellule() = default;
 
     virtual bool estVivante() const =0;
+    virtual bool estObstacle() const =0;
 
     //retourne un unique_ptr d'un EtatCellule qui est celui de la prochaine ittération de la simulation
     virtual std::unique_ptr<EtatCellule> prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const =0;

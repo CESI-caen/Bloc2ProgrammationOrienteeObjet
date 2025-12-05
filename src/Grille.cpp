@@ -13,6 +13,23 @@
 
 
 std::vector<std::size_t> Grille::tableau_hashs;
+Grille::Grille(std::string l, std::string lg, Regle* regle) : regle(regle) {
+    this->largeur = std::stoi(l); // largeur = colonnes (X)
+    this->longueur = std::stoi(lg); // longueur = lignes (Y)
+
+    // grille[ligne][colonne] = grille[y][x]
+    grille.resize(longueur);
+    for (int i = 0; i < longueur; i++) {
+        grille[i].resize(largeur);
+    }
+
+    // i = ligne (Y), j = colonne (X)
+    for(int i = 0 ; i < longueur ;i++ ){
+        for(int j = 0 ; j < largeur ; j++){
+            this->grille[i][j] = std::make_unique<Cellule>(i, j, std::make_unique<EtatMort>());
+        }
+    }
+}
 
 Grille::Grille(DonneesFichierDebut donnees, Regle* regle) : regle(regle) {
     this->largeur = donnees.largeur;   // largeur = colonnes (X)
@@ -98,8 +115,8 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
     // Déplacements pour les 8 voisins : [dLigne, dColonne]
     // dLigne : décalage en ligne (haut/bas)
     // dColonne : décalage en colonne (gauche/droite)
-    const int dLigne[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
-    const int dColonne[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
+    const int dx[8] = {-1, -1, -1,  0, 0,  1, 1, 1};
+    const int dy[8] = {-1,  0,  1, -1, 1, -1, 0, 1};
 
     // ATTENTION: dans Cellule, x stocke la ligne et y stocke la colonne
     // (c'est contre-intuitif mais c'est comme ça que le code est fait)
@@ -108,8 +125,8 @@ std::vector<Cellule *> Grille::voisines(const Cellule &c) const {
 
     for (int i = 0; i < 8; i++) {
         // Calcul avec modulo pour grille torique
-        int nouvelleLigne = (ligne + dLigne[i] + this->longueur) % this->longueur;
-        int nouvelleColonne = (colonne + dColonne[i] + this->largeur) % this->largeur;
+        int nouvelleLigne = (ligne + dx[i] + this->longueur) % this->longueur;
+        int nouvelleColonne = (colonne + dy[i] + this->largeur) % this->largeur;
         voisins.push_back(grille[nouvelleLigne][nouvelleColonne].get());
     }
     return voisins; 
@@ -162,7 +179,7 @@ void Grille::evoluer() {
         for (int j = 0; j < largeur; j++) {
             Cellule& c = *grille[i][j];
 
-            // CORRECTION: Utiliser la fonction voisines() pour une gestion cohérente de la grille torique
+            // Utiliser la fonction voisines() pour une gestion cohérente de la grille torique
             std::vector<Cellule*> vois = voisines(c);
 
             // Compter le nombre de voisines vivantes
@@ -171,15 +188,27 @@ void Grille::evoluer() {
             // --- Calculer le prochain état ---
             const Regle* regleAUtiliser = regle;
             RegleJeuVie regleDefaut;
-            if (regleAUtiliser == nullptr) regleAUtiliser = &regleDefaut;
+            if (regleAUtiliser == nullptr){
+            regleAUtiliser = &regleDefaut;
+            }
 
             std::unique_ptr<EtatCellule> nouvelEtat;
             if (c.estVivante()) {
-                EtatVivant etatVivantTemp;
-                nouvelEtat = etatVivantTemp.prochaineEtat(nb, *regleAUtiliser);
+                if(c.estObstacle()){
+                    EtatObstacleVivant etatObstacleVivantTemp;
+                    nouvelEtat = etatObstacleVivantTemp.prochaineEtat(nb, *regleAUtiliser);
+                } else {
+                    EtatVivant etatVivantTemp;
+                    nouvelEtat = etatVivantTemp.prochaineEtat(nb, *regleAUtiliser);
+                }
             } else {
-                EtatMort etatMortTemp;
-                nouvelEtat = etatMortTemp.prochaineEtat(nb, *regleAUtiliser);
+                if(c.estObstacle()){
+                    EtatObstacleMort etatObstacleMortTemp;
+                    nouvelEtat = etatObstacleMortTemp.prochaineEtat(nb, *regleAUtiliser);
+                } else {
+                    EtatMort etatMortTemp;
+                    nouvelEtat = etatMortTemp.prochaineEtat(nb, *regleAUtiliser);
+                }
             }
 
             // Créer une nouvelle cellule avec le nouvel état

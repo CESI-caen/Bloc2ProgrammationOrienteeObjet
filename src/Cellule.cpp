@@ -23,6 +23,10 @@ bool Cellule::estVivante() const{
     return this->etat->estVivante();
 }
 
+bool Cellule::estObstacle() const {
+    return this->etat->estObstacle();
+}
+
 //ne renvoie rien car modifie directement l'attribut, en changeant le unique_ptr (avec move())
 void Cellule::calculerProchaineEtat(int nb_voisines_vivantes, const Regle& regle) {
     this->etat = std::move(this->etat->prochaineEtat(nb_voisines_vivantes, regle));

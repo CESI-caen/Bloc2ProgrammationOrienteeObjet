@@ -8,7 +8,19 @@ void InterfaceConsole::notifierChangementGrille(Grille& g) {
     // i = ligne (Y), j = colonne (X)
     for (int i = 0; i < longueur; ++i) {
         for (int j = 0; j < largeur; ++j) {
-            std::cout << (g.getGrille()[i][j]->estVivante() ? "1" : "0");
+            if (g.getGrille()[i][j]->estVivante()){
+                if(g.getGrille()[i][j]->estObstacle()){
+                    std::cout << "9";
+                } else {
+                    std::cout << "1";
+                }
+            } else {
+                if (g.getGrille()[i][j]->estObstacle()){
+                    std::cout << "8";
+                } else {
+                    std::cout << "0";
+                }
+            }
         }
         std::cout << std::endl;
     }

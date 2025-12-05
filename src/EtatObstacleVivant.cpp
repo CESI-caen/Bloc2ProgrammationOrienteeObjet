@@ -8,6 +8,9 @@ EtatObstacleVivant::EtatObstacleVivant() {}
 bool EtatObstacleVivant::estVivante() const{
     return true;
 }
+bool EtatObstacleVivant::estObstacle() const {
+    return true;
+}
 
 //retourne toujours le meme état : vivant
 std::unique_ptr<EtatCellule> EtatObstacleVivant::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {

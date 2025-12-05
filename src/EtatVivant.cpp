@@ -10,6 +10,9 @@ EtatVivant::EtatVivant() {}
 bool EtatVivant::estVivante() const {
     return true;
 }
+bool EtatVivant::estObstacle() const {
+    return false;
+}
 
 std::unique_ptr<EtatCellule> EtatVivant::prochaineEtat(int nb_voisines_vivantes, const Regle& regle) const {
     const RegleJeuVie& r = dynamic_cast<const RegleJeuVie&>(regle);
