@@ -15,6 +15,9 @@ class InterfaceGraphique :public JeuObservateur
 private:
    sf::RenderWindow fenetre;
    GrilleGraphique grille_graphique;
+   sf::Font font;
+   sf::Text texte;
+
 public:
     InterfaceGraphique(int l, int lg);
     void notifierFinSimulation(std::string& raison) override;

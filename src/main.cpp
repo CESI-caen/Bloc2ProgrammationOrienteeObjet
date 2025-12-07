@@ -16,10 +16,14 @@
 
 
 int main(){
+    Fichier f_out("grille_fin", "../grille_debut_out.txt");
+
     std::string user;
     std::string largeur;
     std::string longueur;
     // Pour le mode graphique, on va gérer l'évolution dans la boucle principale
+
+    f_out.Vider();
     std::cout << "Quel grille souhaitez-vous ? (Grille 'propre' à vous / ou grille 'vide')" << std::endl;
     std::cin >> user;
     
@@ -64,11 +68,12 @@ int main(){
         observateurGraphique->jouer(grille, observateurConsole);
 
         std::cout << "\n=== Fin de la simulation ===" << std::endl;
+        f_out.Ecrire("Grille finale après simulation :");
         return 0;
     }
 
     else if (user == "propre" || user == "Propre"){
-    Fichier f("Glidder", "../grille_debut.txt");
+    Fichier f("grille_debut", "../grille_debut.txt");
     // Création de la règle du jeu de la vie
     RegleJeuVie regle;
     // Affiche les regles du jeu de la vie
@@ -103,6 +108,7 @@ int main(){
 
     std::cout << "\n=== Fin de la simulation ===" << std::endl;
 
+    f_out.Ecrire("Grille finale après simulation :");
     return 0;
 }
 }

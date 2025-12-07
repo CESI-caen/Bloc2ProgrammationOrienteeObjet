@@ -24,6 +24,7 @@ public:
 
     std::string Lire(); //n'affiche pas directement dans la console mais return le contenue
     void Ecrire(std::string s); //faire en sorte d'ajouter et de pas écraser !!
+    void Vider(); //vide le contenu du fichier
 };
 
 #endif // DEF_FICHIER 

@@ -18,6 +18,12 @@ InterfaceGraphique::InterfaceGraphique(int l, int lg) {
     int largeurFenetre = l * grille_graphique.getTailleCellule();
     int longueurFenetre = lg * grille_graphique.getTailleCellule();
     fenetre.create(sf::VideoMode(largeurFenetre, longueurFenetre), "Jeu de la Vie");
+
+    font.loadFromFile("../arial.ttf");
+    texte.setFont(font);
+    texte.setCharacterSize(10);
+    texte.setFillColor(sf::Color::White);
+    texte.setPosition(10, 10); 
 }
 
 void InterfaceGraphique::fermer() {
@@ -135,6 +141,10 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
             
             iteration++;
             std::cout << "\n--- Itération " << iteration << " ---" << std::endl;
+            //Affichage de l'itération en cours sur l'interface graphique
+            std::string info = "Iteration : " + std::to_string(iteration);
+            texte.setString(info);
+
             
             grille.evoluer();
             grille.calculeHash();
@@ -156,6 +166,7 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
         // Logique de rendu
         fenetre.clear(sf::Color::Black);          
         grille_graphique.draw(fenetre, sf::RenderStates::Default);
+        fenetre.draw(texte);
         fenetre.display();                        
     }
 }

@@ -61,3 +61,17 @@ void Fichier::Ecrire(std::string s) {
                   << std::endl;
     }
 }
+
+void Fichier::Vider(){
+        std::ofstream writting(chemin, std::ios::trunc); // Ouvre le fichier en mode troncature
+        if (writting.is_open()) {
+            writting.close(); // Ferme immédiatement le fichier après l'avoir vidé
+        } else {
+            std::cerr << "[ERROR]"
+                      << ", Fichier : " << __FILE__
+                      << ", Ligne : " << __LINE__
+                      << ", Fonction : " << __func__
+                      << " --> Impossible d'ouvrir le fichier spécifié pour le vider : " << chemin
+                      << std::endl;
+        }
+    }

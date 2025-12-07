@@ -2,6 +2,7 @@
 #define DEF_INTERFACE_CONSOLE
 
 #include "JeuObservateur.h"
+#include "Fichier.h"
 class InterfaceConsole :public JeuObservateur
 {
 public:

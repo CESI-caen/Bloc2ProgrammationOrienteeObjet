@@ -159,6 +159,7 @@ bool Grille::verifHash() const {
 }
 
 void Grille::evoluer() {
+    Fichier f("grille_debut_out.txt", "../grille_debut_out.txt");
     /*
     1. Parcourir la grille existante
     2. Calculer le nouvel état de chaque cellule
@@ -172,7 +173,7 @@ void Grille::evoluer() {
     for (int i = 0; i < longueur; i++) {
         g_temp[i].resize(largeur);
     }
-
+    f.Ecrire(std::to_string(longueur) + " " + std::to_string(largeur));
     // Boucle sur chaque cellule
     for (int i = 0; i < longueur; i++) {
         for (int j = 0; j < largeur; j++) {
@@ -217,6 +218,32 @@ void Grille::evoluer() {
 
     // Remplacer l'ancienne grille par la nouvelle
     grille = std::move(g_temp);
+    
+    // Transformer grille en string
+    std::stringstream ss;
+    for (int i = 0; i < longueur; i++) {
+        for (int j = 0; j < largeur; j++) {
+            if (grille[i][j]->estVivante()){
+                if (grille[i][j]->estObstacle()){
+                    ss << "9"; // Obstacle vivant
+                } else {
+                    ss << "1"; // Vivante
+                }
+            } else if (grille[i][j]->estObstacle()){
+                ss << "8"; // Obstacle mort
+            } else {
+                ss << "0"; // Morte
+            }
+        }
+        if (i < longueur - 1){
+            ss << "\n"; //Affichage ligne par ligne
+        } 
+    }
+    std::string grille_string = ss.str();
+    
+    // Écrire dans un fichier sortie
+    f.Ecrire(grille_string);
+    f.Ecrire(""); // Saut de ligne
 }
 
 
