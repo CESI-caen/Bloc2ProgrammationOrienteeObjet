@@ -21,7 +21,7 @@ InterfaceGraphique::InterfaceGraphique(int l, int lg) {
 
     font.loadFromFile("../arial.ttf");
     texte.setFont(font);
-    texte.setCharacterSize(10);
+    texte.setCharacterSize(lg);
     texte.setFillColor(sf::Color::White);
     texte.setPosition(10, 10); 
 }
@@ -118,6 +118,12 @@ void InterfaceGraphique::jouer(Grille& grille, std::shared_ptr<InterfaceConsole>
                     for (int i = 0; i < 1; i++) {
                         grille.evoluer();
                         grille.calculeHash();
+
+                        iteration++;
+                        std::cout << "\n--- Itération " << iteration << " ---" << std::endl;
+                        //Affichage de l'itération en cours sur l'interface graphique
+                        std::string info = "Iteration : " + std::to_string(iteration);
+                        texte.setString(info);
                     }
                     // Mise à jour des observateurs après 10 évolutions
                     observateurConsole->notifierChangementGrille(grille);
